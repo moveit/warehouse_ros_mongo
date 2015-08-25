@@ -59,7 +59,7 @@ def eq_poses(p1, p2):
     return to_tuple(p1)==to_tuple(p2)
             
 
-class TestMongoRospy(unittest.TestCase):
+class TestWarehouseRosMongoPy(unittest.TestCase):
 
     def test_basic(self):
 
@@ -118,8 +118,8 @@ class TestMongoRospy(unittest.TestCase):
         
 
 if __name__ == "__main__":
-    rospy.init_node('test_mongo_rospy')
+    rospy.init_node('test_warehouse_ros_mongo_py')
     import rostest
-    rostest.rosrun('mongo_ros', 'test_mongo_rospy', TestMongoRospy)
+    rostest.rosrun('warehouse_ros_mongo', 'test_warehouse_ros_mongo_py', TestWarehouseRosMongoPy)
 
 ## %EndTag(PYTHON_CLIENT)%

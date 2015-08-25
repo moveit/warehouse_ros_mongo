@@ -5,7 +5,7 @@
 #  MongoDB_INCLUDE_DIR, where to find mongo/client/dbclient.h
 #  MongoDB_LIBRARIES, the libraries needed to use MongoDB.
 #  MongoDB_FOUND, If false, do not try to use MongoDB.
-#  MongoDB_EXPOSE_MACROS, If true, mongo_ros should use '#define MONGO_EXPOSE_MACROS'
+#  MongoDB_EXPOSE_MACROS, If true, warehouse_ros_mongo should use '#define MONGO_EXPOSE_MACROS'
 
 set(MongoDB_EXPOSE_MACROS "NO")
 

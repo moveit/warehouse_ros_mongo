@@ -1,10 +1,11 @@
 <package>
-  <name>warehouse_ros</name>
+  <name>warehouse_ros_mongo</name>
   <version>0.8.8</version>
   <description>
-    Persistent storage of ROS data using MongoDB
+    Implementation of warehouse_ros for MongoDB
   </description>
   <author email="bhaskara@willowgarage.com">Bhaskara Marthi</author>
+  <author email="cbrew@fetchrobotics.com">Connor Brew</author>
   <maintainer email="isucan@google.com">Ioan Sucan</maintainer>
 
   <license>BSD</license>
@@ -12,9 +13,9 @@
 
   <buildtool_depend>catkin</buildtool_depend>
 
+  <build_depend>warehouse_ros</build_depend>
   <build_depend>rospy</build_depend>
   <build_depend>roscpp</build_depend>
-  <build_depend>geometry_msgs</build_depend>
   <build_depend>rostime</build_depend>
   <build_depend>rostest</build_depend>
   <build_depend>std_msgs</build_depend>
@@ -23,9 +24,9 @@
   <build_depend>curl</build_depend>
   <build_depend>libssl-dev</build_depend>
 
+  <run_depend>warehouse_ros</run_depend>
   <run_depend>roscpp</run_depend>
   <run_depend>rostime</run_depend>
-  <run_depend>geometry_msgs</run_depend>
   <run_depend>std_msgs</run_depend>
   <run_depend>mongodb-dev</run_depend>
   <run_depend>python-pymongo</run_depend>
@@ -33,5 +34,9 @@
   <run_depend>libssl-dev</run_depend>
   
   <test_depend>gtest</test_depend>
+
+  <export>
+    <warehouse_ros plugin="${prefix}/mongo_database_connection_plugin_description.xml"/>
+  </export>
 
 </package>

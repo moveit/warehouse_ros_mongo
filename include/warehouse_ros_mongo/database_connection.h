@@ -31,73 +31,49 @@
 /**
  * \file 
  * 
- * Defines an iterator type over results of a query
+ * Db-level operations.  Most operations are in message_collection.h
  *
  * \author Bhaskara Marthi
  */
 
-#ifndef MONGO_ROS_QUERY_RESULTS_H
-#define MONGO_ROS_QUERY_RESULTS_H
+#ifndef WAREHOUSE_ROS_MONGO_DATABASE_CONNECTION_H
+#define WAREHOUSE_ROS_MONGO_DATABASE_CONNECTION_H
 
-#include <mongo_ros/message_with_metadata.h>
-#include <boost/optional.hpp>
+#include <warehouse_ros_mongo/message_collection.h>
+#include <warehouse_ros/database_connection.h>
+#include <boost/shared_ptr.hpp>
 
-namespace mongo_ros
+namespace warehouse_ros_mongo
 {
 
-// To avoid some const-correctness issues we wrap Mongo's returned auto_ptr in
-// another pointer
-typedef std::auto_ptr<mongo::DBClientCursor> Cursor;
-typedef boost::shared_ptr<Cursor> CursorPtr;
-
-template <class M>
-class ResultIterator :
-    public boost::iterator_facade<ResultIterator<M>,
-                                  typename MessageWithMetadata<M>::ConstPtr,
-                                  boost::single_pass_traversal_tag,
-                                  typename MessageWithMetadata<M>::ConstPtr >
+class MongoDatabaseConnection : public warehouse_ros::DatabaseConnection
 {
 public:
+  MongoDatabaseConnection();
 
-  /// \brief Constructor
-  ResultIterator (boost::shared_ptr<mongo::DBClientConnection> conn,
-                  const std::string& ns,
-                  const mongo::Query& query,
-                  boost::shared_ptr<mongo::GridFS> gfs,
-                  bool metadata_only);
+  bool setParams(const std::string& host, unsigned port, float timeout);
 
-  /// \brief Copy constructor
-  ResultIterator (const ResultIterator& rhs);
+  bool setTimeout(float timeout);
 
-  /// \brief Constructor for past_the_end iterator
-  ResultIterator ();
+  bool connect();
 
-private:
+  bool isConnected();
 
-  friend class boost::iterator_core_access;
+  void dropDatabase(const std::string& db_name);
 
-  // Member functions needed to be an iterator
-  void increment ();
-  typename MessageWithMetadata<M>::ConstPtr dereference () const;
-  bool equal (const ResultIterator<M>& other) const;
+  std::string messageType(const std::string& db_name, const std::string& collection_name);
 
-  const bool metadata_only_;
-  CursorPtr cursor_;
-  boost::optional<mongo::BSONObj> next_;
-  boost::shared_ptr<mongo::GridFS> gfs_;
+protected:
+  boost::shared_ptr<mongo::DBClientConnection> conn_;
+
+  std::string host_;
+  unsigned port_;
+  float timeout_;
+
+  MessageCollectionHelper::Ptr openCollectionHelper(const std::string& db_name,
+                                                    const std::string& collection_name);
 };
-
-/// A templated typedef for convenience
-template <class M>
-struct QueryResults
-{
-  typedef std::pair<ResultIterator<M>, ResultIterator<M> > range_t;
-};
-
-
 
 } // namespace
-
-#include "impl/query_results_impl.hpp"
 
 #endif // include guard

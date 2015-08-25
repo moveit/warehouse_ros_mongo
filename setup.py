@@ -4,7 +4,7 @@ from distutils.core import setup
 from catkin_pkg.python_setup import generate_distutils_setup
 
 d = generate_distutils_setup(
-    packages=['warehouse_ros'],
+    packages=['warehouse_ros_mongo'],
     package_dir={'': 'src'},
     requires=['roslib', 'rospy']
 )

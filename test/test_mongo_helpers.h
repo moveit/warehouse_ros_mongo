@@ -30,7 +30,7 @@
 
 #include <geometry_msgs/Pose.h>
 #include <cstring>
-#include <mongo_ros/message_with_metadata.h>
+#include <warehouse_ros/message_with_metadata.h>
 
 const double TOL=1e-3;
 using std::ostream;
@@ -38,8 +38,7 @@ using std::ostream;
 namespace geometry_msgs
 {
 
-inline
-bool operator== (const Pose& p1, const Pose& p2)
+inline bool operator==(const Pose& p1, const Pose& p2)
 {
   const Point& pos1 = p1.position;
   const Point& pos2 = p2.position;
@@ -51,12 +50,20 @@ bool operator== (const Pose& p1, const Pose& p2)
 
 }
 
+inline MongoMetadata& downcastMetadata(Metadata::ConstPtr metadata) const {
+  return *(const_cast<MongoMetadata*>(static_cast<const MongoMetadata*>(metadata.get())));
+}
+
+inline MongoQuery& downcastQuery(Query::ConstPtr query) const {
+  return *(const_cast<MongoQuery*>(static_cast<const MongoQuery*>(query.get())));
+}
+
 template <class T>
-ostream& operator<< (ostream& str, const mongo_ros::MessageWithMetadata<T>& s)
+ostream& operator<<(ostream& str, const warehouse_ros::MessageWithMetadata<T>& s)
 {
   const T& msg = s;
   str << "Message: " << msg;
-  str << "\nMetadata: " << s.metadata.toString();
+  str << "\nMetadata: " << downcastMetadata(s.metadata).toString();
   return str;
 }
 
@@ -72,8 +79,7 @@ geometry_msgs::Quaternion createQuaternionMsgFromYaw(double yaw)
 }
 
 
-inline
-geometry_msgs::Pose makePose (const double x, const double y, const double theta)
+inline geometry_msgs::Pose makePose(const double x, const double y, const double theta)
 {
   geometry_msgs::Pose p;
   p.position.x = x;

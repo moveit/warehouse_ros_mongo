@@ -31,42 +31,44 @@
 /**
  * \file 
  * 
- * Db-level operations.  Most operations are in message_collection.h
+ * Implementation of warehouse_ros::ResultIteratorHelper for mongo queries
  *
  * \author Bhaskara Marthi
  */
 
-#ifndef MONGO_ROS_MONGO_ROS_H
-#define MONGO_ROS_MONGO_ROS_H
+#ifndef WAREHOUSE_ROS_MONGO_QUERY_RESULTS_H
+#define WAREHOUSE_ROS_MONGO_QUERY_RESULTS_H
 
-#include <mongo_ros/metadata.h>
-#include <ros/ros.h>
-#include <boost/shared_ptr.hpp>
+#include <warehouse_ros_mongo/metadata.h>
+#include <warehouse_ros/query_results.h>
+#include <boost/optional.hpp>
 
-namespace mongo_ros
+namespace warehouse_ros_mongo
 {
 
-boost::shared_ptr<mongo::DBClientConnection>
-makeDbConnection (const ros::NodeHandle& nh, const std::string& host="",
-                  const unsigned& port=0, float timeout=300.0);
-  
+// To avoid some const-correctness issues we wrap Mongo's returned auto_ptr in
+// another pointer
+typedef std::auto_ptr<mongo::DBClientCursor> Cursor;
+typedef boost::shared_ptr<Cursor> CursorPtr;
 
-/// Return the ROS Message type of a given collection
-std::string messageType (mongo::DBClientConnection& conn,
-                         const std::string& db,
-                         const std::string& coll);
+class MongoResultIterator : public warehouse_ros::ResultIteratorHelper
+{
+public:
+  MongoResultIterator(boost::shared_ptr<mongo::DBClientConnection> conn,
+                      boost::shared_ptr<mongo::GridFS> gfs,
+                      const std::string& ns,
+                      const mongo::Query& query);
+  bool next();
+  bool hasData() const;
+  warehouse_ros::Metadata::ConstPtr metadata() const;
+  std::string message() const;
+  mongo::BSONObj metadataRaw() const;
 
-/// Drop a db and all its collections
-/// Uses the connection parameters given by the warehouse_host and
-/// warehouse_port ROS parameters
-void dropDatabase (const std::string& db);
-
-/// Drop a db and its collections, given host and port parameters,
-/// and a timeout.  A DbClientConnection exception will be thrown if
-/// we can't connect in time.
-void dropDatabase (const std::string& db, const std::string& host,
-                   unsigned port, const float timeout);
-
+private:
+  CursorPtr cursor_;
+  boost::optional<mongo::BSONObj> next_;
+  boost::shared_ptr<mongo::GridFS> gfs_;
+};
 
 } // namespace
 

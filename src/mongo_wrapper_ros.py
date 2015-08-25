@@ -41,7 +41,7 @@ def is_lucid_or_maverick():
 
 def print_help_message():
     print """
-Usage: rosrun mongodb wrapper.py.
+Usage: rosrun warehouse_ros_mongo mongo_wrapper_ros.py
 Start the mongodb database server.  Configured using the following ROS parameters.  
     
 Parameters in parent namespace
