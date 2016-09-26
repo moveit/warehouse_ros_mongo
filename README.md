@@ -2,7 +2,7 @@ Code for persisting ROS message data using MongoDB.  Contains C++ and Python lib
 
 # Building from source
 
-## ROS Jade 
+## ROS Jade  / Kinetic
 
 In order to build from source you'll need to install the [mongo c++ drivers](https://github.com/mongodb/mongo-cxx-driver/wiki/Download-and-Compile-the-Legacy-Driver)
 
@@ -14,7 +14,8 @@ git clone -b 26compat https://github.com/mongodb/mongo-cxx-driver.git
 Then compile using scons:
 ```
 sudo apt-get install scons
-scons --prefix=/usr/local/ --full --use-system-boost --disable-warnings-as-errors
+cd mongo-cxx-driver
+sudo scons --prefix=/usr/local/ --full --use-system-boost --disable-warnings-as-errors
 sudo scons install
 ```
 
