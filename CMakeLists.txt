@@ -51,12 +51,14 @@ target_link_libraries(warehouse_ros_mongo ${catkin_LIBRARIES} ${MongoDB_LIBRARIE
 catkin_add_gtest(test_warehouse_ros_mongo_cpp test/test_warehouse_ros_mongo.cpp)
 target_link_libraries(test_warehouse_ros_mongo_cpp warehouse_ros_mongo)
 
-install(TARGETS warehouse_ros_mongo LIBRARY DESTINATION lib)
-install(DIRECTORY include/ DESTINATION include FILES_MATCHING PATTERN "*.h" PATTERN "*.hpp")
 install(PROGRAMS src/mongo_wrapper_ros.py DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
-install(
-  FILES
-    "${CATKIN_DEVEL_PREFIX}/include/warehouse_ros_mongo/config.h"
-    mongo_database_connection_plugin_description.xml
-  DESTINATION
-    include/warehouse_ros_mongo)
+
+install(TARGETS warehouse_ros_mongo LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION})
+
+install(DIRECTORY include/${PROJECT_NAME}/ DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION}
+        FILES_MATCHING PATTERN "*.h")
+install(FILES "${CATKIN_DEVEL_PREFIX}/include/warehouse_ros_mongo/config.h"
+        DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION})
+
+install(FILES mongo_database_connection_plugin_description.xml
+        DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION})
