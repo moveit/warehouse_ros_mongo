@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 2.8.3)
 project(warehouse_ros_mongo)
 
-set(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake/" ${CMAKE_MODULE_PATH})
+list(APPEND CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake/")
 
 find_package(catkin REQUIRED
   roscpp
@@ -19,8 +19,6 @@ if("${MongoDB_LIBRARIES}" MATCHES "\\.so$")
   set(MONGO_EXPORT MongoDB)
 endif()
 
-file(MAKE_DIRECTORY "${CATKIN_DEVEL_PREFIX}/include")
-
 catkin_python_setup()
 
 catkin_package(
@@ -33,6 +31,8 @@ catkin_package(
 if (NOT MongoDB_EXPOSE_MACROS)
   add_definitions(-DMONGO_EXPOSE_MACROS)
 endif()
+
+file(MAKE_DIRECTORY "${CATKIN_DEVEL_PREFIX}/include")
 configure_file("include/warehouse_ros_mongo/config.h.in" "${CATKIN_DEVEL_PREFIX}/include/warehouse_ros_mongo/config.h")
 
 include_directories(${CATKIN_DEVEL_PREFIX}/include include ${catkin_INCLUDE_DIRS} ${MongoDB_INCLUDE_DIR} ${Boost_INCLUDE_DIRS})
@@ -46,10 +46,12 @@ set(warehouse_srcs
   src/database_connection.cpp)
 
 add_library(warehouse_ros_mongo SHARED ${warehouse_srcs})
-
 target_link_libraries(warehouse_ros_mongo ${catkin_LIBRARIES} ${MongoDB_LIBRARIES} ${OPENSSL_LIBRARIES} ${Boost_LIBRARIES})
-catkin_add_gtest(test_warehouse_ros_mongo_cpp test/test_warehouse_ros_mongo.cpp)
-target_link_libraries(test_warehouse_ros_mongo_cpp warehouse_ros_mongo)
+
+if(CATKIN_ENABLE_TESTING)
+  catkin_add_gtest(test_warehouse_ros_mongo_cpp test/test_warehouse_ros_mongo.cpp)
+  target_link_libraries(test_warehouse_ros_mongo_cpp warehouse_ros_mongo)
+endif()
 
 install(PROGRAMS src/mongo_wrapper_ros.py DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
 
