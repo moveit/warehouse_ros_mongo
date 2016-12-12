@@ -19,6 +19,8 @@ if("${MongoDB_LIBRARIES}" MATCHES "\\.so$")
   set(MONGO_EXPORT MongoDB)
 endif()
 
+file(MAKE_DIRECTORY "${CATKIN_DEVEL_PREFIX}/include")
+
 catkin_python_setup()
 
 catkin_package(
@@ -32,7 +34,6 @@ if (NOT MongoDB_EXPOSE_MACROS)
   add_definitions(-DMONGO_EXPOSE_MACROS)
 endif()
 
-file(MAKE_DIRECTORY "${CATKIN_DEVEL_PREFIX}/include")
 configure_file("include/warehouse_ros_mongo/config.h.in" "${CATKIN_DEVEL_PREFIX}/include/warehouse_ros_mongo/config.h")
 
 include_directories(${CATKIN_DEVEL_PREFIX}/include include ${catkin_INCLUDE_DIRS} ${MongoDB_INCLUDE_DIR} ${Boost_INCLUDE_DIRS})
