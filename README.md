@@ -22,7 +22,6 @@ Then compile using scons:
 sudo apt-get install scons
 cd mongo-cxx-driver
 sudo scons --prefix=/usr/local/ --full --use-system-boost --disable-warnings-as-errors
-sudo scons install
 ```
 
 You should now be able to compile the packages using catkin.
