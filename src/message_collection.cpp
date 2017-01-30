@@ -39,7 +39,9 @@
 #include <warehouse_ros_mongo/message_collection.h>
 #include <std_msgs/String.h>
 #include <boost/foreach.hpp>
+#ifdef WAREHOUSE_ROS_MONGO_HAVE_MONGO_VERSION_H
 #include <mongo/version.h>
+#endif
 
 namespace warehouse_ros_mongo
 {
