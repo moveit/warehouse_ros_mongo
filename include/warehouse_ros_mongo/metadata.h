@@ -49,6 +49,8 @@
 #include <warehouse_ros_mongo/config.h>
 #include <warehouse_ros/metadata.h>
 
+#include <mongo/db/json.h>
+
 namespace warehouse_ros_mongo
 {
 

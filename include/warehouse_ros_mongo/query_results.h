@@ -42,6 +42,8 @@
 #include <warehouse_ros_mongo/metadata.h>
 #include <warehouse_ros/query_results.h>
 #include <boost/optional.hpp>
+#include <mongo/client/dbclientcursor.h>
+#include <memory>
 
 namespace warehouse_ros_mongo
 {
