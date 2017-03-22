@@ -14,6 +14,10 @@ find_package(Boost COMPONENTS system filesystem thread)
 find_package(OpenSSL)
 find_package(MongoDB)
 
+if(EXISTS "${MongoDB_INCLUDE_DIR}/mongo/version.h")
+  add_definitions(-DWAREHOUSE_ROS_MONGO_HAVE_MONGO_VERSION_H)
+endif()
+
 set(MONGO_EXPORT)
 if("${MongoDB_LIBRARIES}" MATCHES "\\.so$")
   set(MONGO_EXPORT MongoDB)

@@ -39,6 +39,9 @@
 #include <warehouse_ros_mongo/message_collection.h>
 #include <std_msgs/String.h>
 #include <boost/foreach.hpp>
+#ifdef WAREHOUSE_ROS_MONGO_HAVE_MONGO_VERSION_H
+#include <mongo/version.h>
+#endif
 
 namespace warehouse_ros_mongo
 {
@@ -78,7 +81,11 @@ bool MongoMessageCollection::initialize(const std::string& datatype, const std::
 
 void MongoMessageCollection::ensureIndex(const string& field)
 {
+#if (MONGOCLIENT_VERSION_MAJOR >= 1)
+  conn_->createIndex(ns_, BSON(field << 1));
+#else
   conn_->ensureIndex(ns_, BSON(field << 1));
+#endif
 }
 
 void MongoMessageCollection::insert(char* msg, size_t msg_size, Metadata::ConstPtr metadata)
