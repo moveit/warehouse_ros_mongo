@@ -50,20 +50,26 @@ inline bool operator==(const Pose& p1, const Pose& p2)
 
 }
 
-inline MongoMetadata& downcastMetadata(Metadata::ConstPtr metadata) const {
-  return *(const_cast<MongoMetadata*>(static_cast<const MongoMetadata*>(metadata.get())));
+inline warehouse_ros::Metadata& downcastMetadata(warehouse_ros::Metadata::ConstPtr metadata) {
+  return *(const_cast<warehouse_ros::Metadata*>(static_cast<const warehouse_ros::Metadata*>(metadata.get())));
 }
 
-inline MongoQuery& downcastQuery(Query::ConstPtr query) const {
-  return *(const_cast<MongoQuery*>(static_cast<const MongoQuery*>(query.get())));
+inline warehouse_ros::Query& downcastQuery(warehouse_ros::Query::ConstPtr query) {
+  return *(const_cast<warehouse_ros::Query*>(static_cast<const warehouse_ros::Query*>(query.get())));
 }
 
 template <class T>
 ostream& operator<<(ostream& str, const warehouse_ros::MessageWithMetadata<T>& s)
 {
   const T& msg = s;
+  std::set<std::string> field_names = downcastMetadata(s.metadata_).lookupFieldNames();
+
   str << "Message: " << msg;
-  str << "\nMetadata: " << downcastMetadata(s.metadata).toString();
+  str << "\nMetadata:\n";
+  std::set<std::string>::iterator it;
+  for (it = field_names.begin(); it != field_names.end(); ++it) {
+    str << *it << "\n";
+  }
   return str;
 }
 

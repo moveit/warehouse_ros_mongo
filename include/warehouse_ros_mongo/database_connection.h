@@ -63,15 +63,15 @@ public:
 
   std::string messageType(const std::string& db_name, const std::string& collection_name);
 
+  MessageCollectionHelper::Ptr openCollectionHelper(const std::string& db_name,
+    const std::string& collection_name);
+
 protected:
   boost::shared_ptr<mongo::DBClientConnection> conn_;
 
   std::string host_;
   unsigned port_;
   float timeout_;
-
-  MessageCollectionHelper::Ptr openCollectionHelper(const std::string& db_name,
-                                                    const std::string& collection_name);
 };
 
 } // namespace
