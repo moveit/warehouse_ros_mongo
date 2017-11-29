@@ -3,6 +3,7 @@ sudo: required
 dist: trusty
 services:
   - docker
+  - mongodb
 language: generic
 compiler:
   - gcc
