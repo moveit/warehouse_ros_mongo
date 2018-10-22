@@ -49,6 +49,10 @@ MongoDatabaseConnection::MongoDatabaseConnection() :
   port_(27017),
   timeout_(60.0)
 {
+  // 'MONGOCLIENT_VERSION' is only defined for newer mongodb client library
+#ifdef MONGOCLIENT_VERSION
+  mongo::client::initialize();
+#endif
 }
 
 bool MongoDatabaseConnection::setParams(const string& host, unsigned port, float timeout)
