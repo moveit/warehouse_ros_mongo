@@ -29,8 +29,8 @@
  */
 
 /**
- * \file 
- * 
+ * \file
+ *
  * The MessageCollection class
  *
  * \author Bhaskara Marthi
@@ -78,7 +78,7 @@ public:
 
   /// \brief Remove messages matching query
   unsigned removeMessages(Query::ConstPtr query);
-  
+
   /// \brief Modify metadata
   /// Find message matching \a q and update its metadata using \a m
   /// In other words, overwrite keys in the message using \a m, but
@@ -98,7 +98,7 @@ public:
   Metadata::Ptr createMetadata() const {
     return Metadata::Ptr(new MongoMetadata());
   }
-  
+
 private:
   void listMetadata(mongo::Query& mquery, std::vector<mongo::BSONObj>& metas);
 

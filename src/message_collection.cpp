@@ -29,8 +29,8 @@
  */
 
 /**
- * \file 
- * 
+ * \file
+ *
  * Implementation of MongoMessageCollection
  *
  * \author Bhaskara Marthi
@@ -133,7 +133,7 @@ void MongoMessageCollection::listMetadata(mongo::Query& mquery, std::vector<mong
 unsigned MongoMessageCollection::removeMessages(Query::ConstPtr query)
 {
   mongo::Query mquery(downcastQuery(query));
-  
+
   std::vector<mongo::BSONObj> metas;
   listMetadata(mquery, metas);
 
@@ -167,9 +167,9 @@ void MongoMessageCollection::modifyMetadata(Query::ConstPtr q, Metadata::ConstPt
   std::set<std::string> fields;
   bson.getFieldNames(fields);
 
-  BOOST_FOREACH (const string& f, fields) 
+  BOOST_FOREACH (const string& f, fields)
   {
-    if ((f!="_id") && (f!="creation_time")) 
+    if ((f!="_id") && (f!="creation_time"))
       new_meta_builder.append(BSON("$set" << BSON(f << bson.getField(f))).\
                               getField("$set"));
   }
