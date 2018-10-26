@@ -29,34 +29,36 @@
  */
 
 #include <geometry_msgs/Pose.h>
-#include <cstring>
 #include <warehouse_ros/message_with_metadata.h>
 #include <warehouse_ros_mongo/metadata.h>
+#include <cstring>
 
-const double TOL=1e-3;
+const double TOL = 1e-3;
 using std::ostream;
 
 namespace geometry_msgs
 {
-
 inline bool operator==(const Pose& p1, const Pose& p2)
 {
   const Point& pos1 = p1.position;
   const Point& pos2 = p2.position;
   const Quaternion& q1 = p1.orientation;
   const Quaternion& q2 = p2.orientation;
-  return (pos1.x == pos2.x) && (pos1.y == pos2.y) && (pos1.z == pos2.z) &&
-    (q1.x == q2.x) && (q1.y == q2.y) && (q1.z == q2.z) && (q1.w == q2.w);
+  return (pos1.x == pos2.x) && (pos1.y == pos2.y) && (pos1.z == pos2.z) && (q1.x == q2.x) && (q1.y == q2.y) &&
+         (q1.z == q2.z) && (q1.w == q2.w);
+}
 }
 
+inline warehouse_ros_mongo::MongoMetadata& downcastMetadata(warehouse_ros::Metadata::ConstPtr metadata)
+{
+  return *(const_cast<warehouse_ros_mongo::MongoMetadata*>(
+      static_cast<const warehouse_ros_mongo::MongoMetadata*>(metadata.get())));
 }
 
-inline warehouse_ros_mongo::MongoMetadata& downcastMetadata(warehouse_ros::Metadata::ConstPtr metadata) {
-  return *(const_cast<warehouse_ros_mongo::MongoMetadata*>(static_cast<const warehouse_ros_mongo::MongoMetadata*>(metadata.get())));
-}
-
-inline warehouse_ros_mongo::MongoQuery& downcastQuery(warehouse_ros::Query::ConstPtr query) {
-  return *(const_cast<warehouse_ros_mongo::MongoQuery*>(static_cast<const warehouse_ros_mongo::MongoQuery*>(query.get())));
+inline warehouse_ros_mongo::MongoQuery& downcastQuery(warehouse_ros::Query::ConstPtr query)
+{
+  return *(
+      const_cast<warehouse_ros_mongo::MongoQuery*>(static_cast<const warehouse_ros_mongo::MongoQuery*>(query.get())));
 }
 
 template <class T>
@@ -68,17 +70,15 @@ ostream& operator<<(ostream& str, const warehouse_ros::MessageWithMetadata<T>& s
   return str;
 }
 
-
 geometry_msgs::Quaternion createQuaternionMsgFromYaw(double yaw)
 {
   geometry_msgs::Quaternion q;
-  q.w = cos(yaw/2);
-  q.z = sin(yaw/2);
+  q.w = cos(yaw / 2);
+  q.z = sin(yaw / 2);
   q.x = 0;
   q.y = 0;
   return q;
 }
-
 
 inline geometry_msgs::Pose makePose(const double x, const double y, const double theta)
 {
@@ -91,8 +91,7 @@ inline geometry_msgs::Pose makePose(const double x, const double y, const double
 
 using std::string;
 
-bool contains (const string& s1, const string& s2)
+bool contains(const string& s1, const string& s2)
 {
-  return strstr(s1.c_str(), s2.c_str())!=NULL;
+  return strstr(s1.c_str(), s2.c_str()) != NULL;
 }
-
