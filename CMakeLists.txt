@@ -11,9 +11,9 @@ find_package(catkin REQUIRED
   warehouse_ros
   class_loader
 )
-find_package(Boost COMPONENTS system filesystem thread)
-find_package(OpenSSL)
-find_package(MongoDB)
+find_package(Boost REQUIRED COMPONENTS system filesystem thread)
+find_package(OpenSSL REQUIRED)
+find_package(MongoDB REQUIRED)
 
 if(EXISTS "${MongoDB_INCLUDE_DIR}/mongo/version.h")
   add_definitions(-DWAREHOUSE_ROS_MONGO_HAVE_MONGO_VERSION_H)
