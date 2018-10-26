@@ -11,11 +11,14 @@ notifications:
     recipients:
       - 130s@2000.jukuin.keio.ac.jp
 env:
+  global:
+    # script do be executed in docker container
+    BEFORE_SCRIPT=./warehouse_ros_mongo/.travis.before_script
   matrix:
-#    - ROS_DISTRO=jade     ROS_REPO=ros              UPSTREAM_WORKSPACE=https://raw.githubusercontent.com/ros-planning/moveit/jade-devel/moveit.rosinstall
-#    - ROS_DISTRO=jade     ROS_REPO=ros-shadow-fixed UPSTREAM_WORKSPACE=https://raw.githubusercontent.com/ros-planning/moveit/jade-devel/moveit.rosinstall
-#    - ROS_DISTRO=kinetic  ROS_REPO=ros              UPSTREAM_WORKSPACE=https://raw.githubusercontent.com/ros-planning/moveit/kinetic-devel/moveit.rosinstall
-    - ROS_DISTRO=kinetic  ROS_REPO=ros-shadow-fixed UPSTREAM_WORKSPACE=https://raw.githubusercontent.com/ros-planning/moveit/kinetic-devel/moveit.rosinstall BEFORE_SCRIPT=./warehouse_ros_mongo/.travis.before_script
+    - ROS_DISTRO=jade     ROS_REPO=ros
+    - ROS_DISTRO=kinetic  ROS_REPO=ros
+    - ROS_DISTRO=melodic  ROS_REPO=ros
+
 before_script:
   - git clone -q https://github.com/ros-planning/moveit_ci.git .moveit_ci
 script:
