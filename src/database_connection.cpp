@@ -87,7 +87,7 @@ bool MongoDatabaseConnection::connect()
       ros::Duration(1.0).sleep();
     }
   }
-  if (conn_->isFailed())
+  if (!conn_ || conn_->isFailed())
   {
     ROS_ERROR_STREAM("Unable to connect to the database at '" << db_address << "'. If you just created the database, it could take a while for initial setup.");
     return false;

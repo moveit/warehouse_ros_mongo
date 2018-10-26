@@ -72,10 +72,11 @@ TEST(MongoRos, MongoRos)
   warehouse_ros_mongo::MongoDatabaseConnection conn;
   conn.setParams("localhost", 27017, 60.0);
   conn.connect();
+  ASSERT_TRUE(conn.isConnected());
 
   // Clear existing data if any
   conn.dropDatabase("my_db");
-  
+
   // Open the collection
   PoseCollection coll = conn.openCollection<gm::Pose>("my_db", "poses");
 
