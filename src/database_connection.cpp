@@ -29,26 +29,24 @@
  */
 
 /**
- * \file 
- * 
+ * \file
+ *
  * Implementation of database_connection.h
  *
  * \author Bhaskara Marthi
  */
 
-#include <warehouse_ros_mongo/database_connection.h>
+#include <mongo/client/init.h>
 #include <pluginlib/class_list_macros.h>
+#include <warehouse_ros_mongo/database_connection.h>
 
 namespace warehouse_ros_mongo
 {
-
 using std::string;
 
-MongoDatabaseConnection::MongoDatabaseConnection() :
-  host_("localhost"),
-  port_(27017),
-  timeout_(60.0)
+MongoDatabaseConnection::MongoDatabaseConnection() : host_("localhost"), port_(27017), timeout_(60.0)
 {
+  mongo::client::initialize();
 }
 
 bool MongoDatabaseConnection::setParams(const string& host, unsigned port, float timeout)
@@ -70,7 +68,7 @@ bool MongoDatabaseConnection::connect()
   const string db_address = (boost::format("%1%:%2%") % host_ % port_).str();
   const ros::WallTime end = ros::WallTime::now() + ros::WallDuration(timeout_);
 
-  while (ros::ok() && ros::WallTime::now()<end)
+  while (ros::ok() && ros::WallTime::now() < end)
   {
     conn_.reset(new mongo::DBClientConnection());
     try
@@ -85,9 +83,10 @@ bool MongoDatabaseConnection::connect()
       ros::Duration(1.0).sleep();
     }
   }
-  if (conn_->isFailed())
+  if (!conn_ || conn_->isFailed())
   {
-    ROS_ERROR_STREAM("Unable to connect to the database at '" << db_address << "'. If you just created the database, it could take a while for initial setup.");
+    ROS_ERROR_STREAM("Unable to connect to the database at '"
+                     << db_address << "'. If you just created the database, it could take a while for initial setup.");
     return false;
   }
 
@@ -111,7 +110,7 @@ string MongoDatabaseConnection::messageType(const string& db, const string& coll
 {
   if (!isConnected())
     throw warehouse_ros::DbConnectException("Cannot look up metatable.");
-  const string meta_ns = db+".ros_message_collections";
+  const string meta_ns = db + ".ros_message_collections";
   std::auto_ptr<mongo::DBClientCursor> cursor = conn_->query(meta_ns, BSON("name" << coll));
   mongo::BSONObj obj = cursor->next();
   return obj.getStringField("type");
@@ -123,6 +122,6 @@ MessageCollectionHelper::Ptr MongoDatabaseConnection::openCollectionHelper(const
   return typename MessageCollectionHelper::Ptr(new MongoMessageCollection(conn_, db_name, collection_name));
 }
 
-} // namespace
+}  // namespace
 
-PLUGINLIB_EXPORT_CLASS( warehouse_ros_mongo::MongoDatabaseConnection, warehouse_ros::DatabaseConnection )
+PLUGINLIB_EXPORT_CLASS(warehouse_ros_mongo::MongoDatabaseConnection, warehouse_ros::DatabaseConnection)

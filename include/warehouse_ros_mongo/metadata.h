@@ -29,8 +29,8 @@
  */
 
 /**
- * \file 
- * 
+ * \file
+ *
  * Define a couple of classes that wrap Mongo's BSON type
  *
  * \author Bhaskara Marthi
@@ -46,14 +46,13 @@
 #else
 #include <malloc.h>
 #endif
-#include <warehouse_ros_mongo/config.h>
 #include <warehouse_ros/metadata.h>
+#include <warehouse_ros_mongo/config.h>
 
 #include <mongo/db/json.h>
 
 namespace warehouse_ros_mongo
 {
-
 using mongo::BSONObj;
 using mongo::BSONObjBuilder;
 
@@ -64,25 +63,22 @@ using mongo::BSONObjBuilder;
 class WrappedBSON : public BSONObj
 {
 public:
-  WrappedBSON() :
-    BSONObj(), builder_(new BSONObjBuilder())
-  {}
+  WrappedBSON() : BSONObj(), builder_(new BSONObjBuilder())
+  {
+  }
 
-  WrappedBSON(const WrappedBSON& other) :
-    BSONObj(), builder_(other.builder_)
+  WrappedBSON(const WrappedBSON& other) : BSONObj(), builder_(other.builder_)
   {
     update();
   }
 
-  WrappedBSON(const BSONObj& other) :
-    BSONObj(), builder_(new BSONObjBuilder())
+  WrappedBSON(const BSONObj& other) : BSONObj(), builder_(new BSONObjBuilder())
   {
     builder_->appendElements(other);
     update();
   }
 
-  WrappedBSON(const std::string& json) :
-    BSONObj(), builder_(new BSONObjBuilder())
+  WrappedBSON(const std::string& json) : BSONObj(), builder_(new BSONObjBuilder())
   {
     builder_->appendElements(mongo::fromjson(json.c_str()));
     update();
@@ -97,7 +93,6 @@ protected:
   }
 };
 
-
 /// \brief Represents a query to the db
 ///
 /// Usage:
@@ -110,134 +105,114 @@ protected:
 class MongoQuery : public WrappedBSON, public warehouse_ros::Query
 {
 public:
-  MongoQuery() : WrappedBSON ()
-  {}
+  MongoQuery() : WrappedBSON()
+  {
+  }
 
-  MongoQuery(const MongoQuery& other) :
-    WrappedBSON(other)
-  {}
+  MongoQuery(const MongoQuery& other) : WrappedBSON(other)
+  {
+  }
 
-  MongoQuery(const BSONObj& other) :
-    WrappedBSON(other)
-  {}
+  MongoQuery(const BSONObj& other) : WrappedBSON(other)
+  {
+  }
 
-  void append(const std::string& name,
-              const std::string& val)
+  void append(const std::string& name, const std::string& val)
   {
     *builder_ << name << val;
     WrappedBSON::update();
   }
 
-  void append(const std::string& name,
-              const double val)
+  void append(const std::string& name, const double val)
   {
     *builder_ << name << val;
     WrappedBSON::update();
   }
 
-  void append(const std::string& name,
-              const int val)
+  void append(const std::string& name, const int val)
   {
     *builder_ << name << val;
     WrappedBSON::update();
   }
 
-  void append(const std::string& name,
-              const bool val)
+  void append(const std::string& name, const bool val)
   {
     *builder_ << name << val;
     WrappedBSON::update();
   }
 
-  void appendLT(const std::string& name,
-                const double val)
+  void appendLT(const std::string& name, const double val)
   {
     *builder_ << name << mongo::LT << val;
     WrappedBSON::update();
   }
 
-  void appendLT(const std::string& name,
-                const int val)
+  void appendLT(const std::string& name, const int val)
   {
     *builder_ << name << mongo::LT << val;
     WrappedBSON::update();
   }
 
-  void appendLTE(const std::string& name,
-                 const double val)
+  void appendLTE(const std::string& name, const double val)
   {
     *builder_ << name << mongo::LTE << val;
     WrappedBSON::update();
   }
 
-  void appendLTE(const std::string& name,
-                 const int val)
+  void appendLTE(const std::string& name, const int val)
   {
     *builder_ << name << mongo::LTE << val;
     WrappedBSON::update();
   }
 
-  void appendGT(const std::string& name,
-                const double val)
+  void appendGT(const std::string& name, const double val)
   {
     *builder_ << name << mongo::GT << val;
     WrappedBSON::update();
   }
 
-  void appendGT(const std::string& name,
-                const int val)
+  void appendGT(const std::string& name, const int val)
   {
     *builder_ << name << mongo::GT << val;
     WrappedBSON::update();
   }
 
-  void appendGTE(const std::string& name,
-                 const double val)
+  void appendGTE(const std::string& name, const double val)
   {
     *builder_ << name << mongo::GTE << val;
     WrappedBSON::update();
   }
 
-  void appendGTE(const std::string& name,
-                 const int val)
+  void appendGTE(const std::string& name, const int val)
   {
     *builder_ << name << mongo::GTE << val;
     WrappedBSON::update();
   }
 
-  void appendRange(const std::string& name,
-                   const double lower,
-                   const double upper)
+  void appendRange(const std::string& name, const double lower, const double upper)
   {
     *builder_ << name << mongo::GT << lower << mongo::LT << upper;
     WrappedBSON::update();
   }
 
-  void appendRange(const std::string& name,
-                   const int lower,
-                   const int upper)
+  void appendRange(const std::string& name, const int lower, const int upper)
   {
     *builder_ << name << mongo::GT << lower << mongo::LT << upper;
     WrappedBSON::update();
   }
 
-  void appendRangeInclusive(const std::string& name,
-                            const double lower,
-                            const double upper)
+  void appendRangeInclusive(const std::string& name, const double lower, const double upper)
   {
     *builder_ << name << mongo::GTE << lower << mongo::LTE << upper;
     WrappedBSON::update();
   }
 
-  void appendRangeInclusive(const std::string& name,
-                            const int lower,
-                            const int upper)
+  void appendRangeInclusive(const std::string& name, const int lower, const int upper)
   {
     *builder_ << name << mongo::GTE << lower << mongo::LTE << upper;
     WrappedBSON::update();
   }
 };
-
 
 /// \brief Represents metadata attached to a message.  Automatically
 /// includes a unique id and creation time.
@@ -246,53 +221,48 @@ public:
 ///
 /// Metadata m("x", 24, "y", 42);
 /// (templated so you can use varying number of fields, numeric or string values)
-/// 
+///
 /// Or:
 /// m = Metadata().append("x", 24).append("name", "foo");
 class MongoMetadata : public warehouse_ros::Metadata, public WrappedBSON
 {
 public:
-  MongoMetadata() :
-    WrappedBSON ()
+  MongoMetadata() : WrappedBSON()
   {
     initialize();
   }
 
-  MongoMetadata(const std::string& json) :
-    WrappedBSON (json)
-  {}
+  MongoMetadata(const std::string& json) : WrappedBSON(json)
+  {
+  }
 
-  MongoMetadata(const MongoMetadata& other) :
-    WrappedBSON(other)
-  {}
+  MongoMetadata(const MongoMetadata& other) : WrappedBSON(other)
+  {
+  }
 
-  MongoMetadata(const BSONObj& other) :
-    WrappedBSON(other)
-  {}
+  MongoMetadata(const BSONObj& other) : WrappedBSON(other)
+  {
+  }
 
-  void append(const std::string& name,
-              const std::string& val)
+  void append(const std::string& name, const std::string& val)
   {
     *builder_ << name << val;
     WrappedBSON::update();
   }
 
-  void append(const std::string& name,
-              const double val)
+  void append(const std::string& name, const double val)
   {
     *builder_ << name << val;
     WrappedBSON::update();
   }
 
-  void append(const std::string& name,
-              const int val)
+  void append(const std::string& name, const int val)
   {
     *builder_ << name << val;
     WrappedBSON::update();
   }
 
-  void append(const std::string& name,
-              const bool val)
+  void append(const std::string& name, const bool val)
   {
     *builder_ << name << val;
     WrappedBSON::update();
@@ -340,7 +310,6 @@ private:
   }
 };
 
+}  // namespace
 
-} // namespace
-
-#endif // include guard
+#endif  // include guard

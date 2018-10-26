@@ -36,8 +36,8 @@
 // make this function globally accessible so strip --strip-unneeded does not remove symbols
 void _thisFunctionShouldNeverBeCalled_MakeWarehouseROSMongoIncludeTheSymbolsWeNeed_(void)
 {
-  mongo::DBClientConnection *conn = new mongo::DBClientConnection();
-  mongo::GridFS *gfs = new mongo::GridFS(*conn, "");
+  mongo::DBClientConnection* conn = new mongo::DBClientConnection();
+  mongo::GridFS* gfs = new mongo::GridFS(*conn, "");
   mongo::BSONObj q;
   mongo::GridFile f = gfs->findFile(q);
   f.write(std::cout);
