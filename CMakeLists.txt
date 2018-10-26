@@ -9,6 +9,7 @@ find_package(catkin REQUIRED
   rostime
   std_msgs
   warehouse_ros
+  class_loader
 )
 find_package(Boost COMPONENTS system filesystem thread)
 find_package(OpenSSL)

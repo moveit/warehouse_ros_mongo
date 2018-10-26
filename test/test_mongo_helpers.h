@@ -31,6 +31,7 @@
 #include <geometry_msgs/Pose.h>
 #include <cstring>
 #include <warehouse_ros/message_with_metadata.h>
+#include <warehouse_ros_mongo/metadata.h>
 
 const double TOL=1e-3;
 using std::ostream;
@@ -50,12 +51,12 @@ inline bool operator==(const Pose& p1, const Pose& p2)
 
 }
 
-inline MongoMetadata& downcastMetadata(Metadata::ConstPtr metadata) const {
-  return *(const_cast<MongoMetadata*>(static_cast<const MongoMetadata*>(metadata.get())));
+inline warehouse_ros_mongo::MongoMetadata& downcastMetadata(warehouse_ros::Metadata::ConstPtr metadata) {
+  return *(const_cast<warehouse_ros_mongo::MongoMetadata*>(static_cast<const warehouse_ros_mongo::MongoMetadata*>(metadata.get())));
 }
 
-inline MongoQuery& downcastQuery(Query::ConstPtr query) const {
-  return *(const_cast<MongoQuery*>(static_cast<const MongoQuery*>(query.get())));
+inline warehouse_ros_mongo::MongoQuery& downcastQuery(warehouse_ros::Query::ConstPtr query) {
+  return *(const_cast<warehouse_ros_mongo::MongoQuery*>(static_cast<const warehouse_ros_mongo::MongoQuery*>(query.get())));
 }
 
 template <class T>
@@ -63,7 +64,7 @@ ostream& operator<<(ostream& str, const warehouse_ros::MessageWithMetadata<T>& s
 {
   const T& msg = s;
   str << "Message: " << msg;
-  str << "\nMetadata: " << downcastMetadata(s.metadata).toString();
+  str << "\nMetadata: " << downcastMetadata(s.metadata_).toString();
   return str;
 }
 
