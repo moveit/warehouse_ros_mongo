@@ -29,8 +29,8 @@
  */
 
 /**
- * \file 
- * 
+ * \file
+ *
  * Test script for Mongo ros c++ interface
  *
  * \author Bhaskara Marthi
@@ -38,11 +38,11 @@
 
 // %Tag(CPP_CLIENT)%
 
-#include "test_mongo_helpers.h"
-#include <warehouse_ros_mongo/database_connection.h>
 #include <gtest/gtest.h>
+#include <warehouse_ros_mongo/database_connection.h>
+#include "test_mongo_helpers.h"
 
-namespace gm=geometry_msgs;
+namespace gm = geometry_msgs;
 using warehouse_ros::Metadata;
 using warehouse_ros::Query;
 using warehouse_ros::NoMatchingMessageException;
@@ -81,8 +81,8 @@ TEST(MongoRos, MongoRos)
   PoseCollection coll = conn.openCollection<gm::Pose>("my_db", "poses");
 
   // Arrange to index on metadata fields 'x' and 'name'
-  //coll.ensureIndex("name");
-  //coll.ensureIndex("x");
+  // coll.ensureIndex("name");
+  // coll.ensureIndex("x");
 
   // Add some poses and metadata
   const gm::Pose p1 = makePose(24, 42, 0);
@@ -104,7 +104,7 @@ TEST(MongoRos, MongoRos)
   EXPECT_EQ(1u, res.size());
   EXPECT_EQ("qux", res[0]->lookupString("name"));
   EXPECT_DOUBLE_EQ(53, res[0]->lookupDouble("x"));
-  
+
   // Set up query: position.x < 40 and position.y > 0.  Reverse order
   // by the "name" metadata field.  Also, here we pull the message itself, not
   // just the metadata.  Finally, we can't use the simplified construction
@@ -113,8 +113,8 @@ TEST(MongoRos, MongoRos)
   q2->appendLT("x", 40);
   q2->appendGT("y", 0);
   vector<PoseMetaPtr> poses = coll.queryList(q2, false, "name", false);
-  
-  // Verify poses. 
+
+  // Verify poses.
   EXPECT_EQ(3u, poses.size());
   EXPECT_EQ(p1, *poses[0]);
   EXPECT_EQ(p2, *poses[1]);
@@ -142,7 +142,7 @@ TEST(MongoRos, MongoRos)
   q5->append("name", "barbar");
   EXPECT_THROW(coll.findOne(q5, true), NoMatchingMessageException);
   EXPECT_THROW(coll.findOne(q5, false), NoMatchingMessageException);
-  
+
   // Test update
   Metadata::Ptr m1 = coll.createMetadata();
   m1->append("name", "barbar");
@@ -155,13 +155,12 @@ TEST(MongoRos, MongoRos)
   EXPECT_EQ("geometry_msgs/Pose", conn.messageType("my_db", "poses"));
 }
 
-
-int main (int argc, char** argv)
+int main(int argc, char** argv)
 {
   ros::init(argc, argv, "client_test");
   ros::NodeHandle nh;
   testing::InitGoogleTest(&argc, argv);
   return RUN_ALL_TESTS();
 }
- 
+
 // %EndTag(CPP_CLIENT)%

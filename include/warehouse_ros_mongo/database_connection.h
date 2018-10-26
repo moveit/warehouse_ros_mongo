@@ -29,8 +29,8 @@
  */
 
 /**
- * \file 
- * 
+ * \file
+ *
  * Db-level operations.  Most operations are in message_collection.h
  *
  * \author Bhaskara Marthi
@@ -39,13 +39,12 @@
 #ifndef WAREHOUSE_ROS_MONGO_DATABASE_CONNECTION_H
 #define WAREHOUSE_ROS_MONGO_DATABASE_CONNECTION_H
 
-#include <warehouse_ros_mongo/message_collection.h>
 #include <warehouse_ros/database_connection.h>
+#include <warehouse_ros_mongo/message_collection.h>
 #include <boost/shared_ptr.hpp>
 
 namespace warehouse_ros_mongo
 {
-
 class MongoDatabaseConnection : public warehouse_ros::DatabaseConnection
 {
 public:
@@ -70,10 +69,9 @@ protected:
   unsigned port_;
   float timeout_;
 
-  MessageCollectionHelper::Ptr openCollectionHelper(const std::string& db_name,
-                                                    const std::string& collection_name);
+  MessageCollectionHelper::Ptr openCollectionHelper(const std::string& db_name, const std::string& collection_name);
 };
 
-} // namespace
+}  // namespace
 
-#endif // include guard
+#endif  // include guard

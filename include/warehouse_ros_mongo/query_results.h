@@ -29,8 +29,8 @@
  */
 
 /**
- * \file 
- * 
+ * \file
+ *
  * Implementation of warehouse_ros::ResultIteratorHelper for mongo queries
  *
  * \author Bhaskara Marthi
@@ -39,15 +39,14 @@
 #ifndef WAREHOUSE_ROS_MONGO_QUERY_RESULTS_H
 #define WAREHOUSE_ROS_MONGO_QUERY_RESULTS_H
 
-#include <warehouse_ros_mongo/metadata.h>
-#include <warehouse_ros/query_results.h>
-#include <boost/optional.hpp>
 #include <mongo/client/dbclientcursor.h>
+#include <warehouse_ros/query_results.h>
+#include <warehouse_ros_mongo/metadata.h>
+#include <boost/optional.hpp>
 #include <memory>
 
 namespace warehouse_ros_mongo
 {
-
 // To avoid some const-correctness issues we wrap Mongo's returned auto_ptr in
 // another pointer
 typedef std::auto_ptr<mongo::DBClientCursor> Cursor;
@@ -56,10 +55,8 @@ typedef boost::shared_ptr<Cursor> CursorPtr;
 class MongoResultIterator : public warehouse_ros::ResultIteratorHelper
 {
 public:
-  MongoResultIterator(boost::shared_ptr<mongo::DBClientConnection> conn,
-                      boost::shared_ptr<mongo::GridFS> gfs,
-                      const std::string& ns,
-                      const mongo::Query& query);
+  MongoResultIterator(boost::shared_ptr<mongo::DBClientConnection> conn, boost::shared_ptr<mongo::GridFS> gfs,
+                      const std::string& ns, const mongo::Query& query);
   bool next();
   bool hasData() const;
   warehouse_ros::Metadata::ConstPtr metadata() const;
@@ -72,6 +69,6 @@ private:
   boost::shared_ptr<mongo::GridFS> gfs_;
 };
 
-} // namespace
+}  // namespace
 
-#endif // include guard
+#endif  // include guard

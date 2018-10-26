@@ -36,8 +36,8 @@
  * \author Bhaskara Marthi
  */
 
-#include <warehouse_ros_mongo/message_collection.h>
 #include <std_msgs/String.h>
+#include <warehouse_ros_mongo/message_collection.h>
 #include <boost/foreach.hpp>
 #ifdef WAREHOUSE_ROS_MONGO_HAVE_MONGO_VERSION_H
 #include <mongo/version.h>
@@ -45,27 +45,20 @@
 
 namespace warehouse_ros_mongo
 {
-
 using std::string;
 
-MongoMessageCollection::MongoMessageCollection(boost::shared_ptr<mongo::DBClientConnection> conn,
-                                               const string& db,
-                                               const string& coll) :
-  conn_(conn),
-  gfs_(new mongo::GridFS(*conn, db)),
-  ns_(db+"."+coll),
-  db_(db),
-  coll_(coll)
+MongoMessageCollection::MongoMessageCollection(boost::shared_ptr<mongo::DBClientConnection> conn, const string& db,
+                                               const string& coll)
+  : conn_(conn), gfs_(new mongo::GridFS(*conn, db)), ns_(db + "." + coll), db_(db), coll_(coll)
 {
 }
-
 
 bool MongoMessageCollection::initialize(const std::string& datatype, const std::string& md5)
 {
   ensureIndex("creation_time");
 
   // Add to the metatable
-  const string meta_ns = db_+".ros_message_collections";
+  const string meta_ns = db_ + ".ros_message_collections";
   if (!conn_->count(meta_ns, BSON("name" << coll_)))
   {
     ROS_DEBUG_NAMED("create_collection", "Inserting info for %s into metatable", coll_.c_str());
@@ -109,8 +102,7 @@ void MongoMessageCollection::insert(char* msg, size_t msg_size, Metadata::ConstP
   conn_->insert(ns_, entry);
 }
 
-ResultIteratorHelper::Ptr MongoMessageCollection::query(Query::ConstPtr query,
-                                                        const string& sort_by,
+ResultIteratorHelper::Ptr MongoMessageCollection::query(Query::ConstPtr query, const string& sort_by,
                                                         bool ascending) const
 {
   mongo::Query mquery(downcastQuery(query));
@@ -169,9 +161,8 @@ void MongoMessageCollection::modifyMetadata(Query::ConstPtr q, Metadata::ConstPt
 
   BOOST_FOREACH (const string& f, fields)
   {
-    if ((f!="_id") && (f!="creation_time"))
-      new_meta_builder.append(BSON("$set" << BSON(f << bson.getField(f))).\
-                              getField("$set"));
+    if ((f != "_id") && (f != "creation_time"))
+      new_meta_builder.append(BSON("$set" << BSON(f << bson.getField(f))).getField("$set"));
   }
 
   mongo::BSONObj new_meta = new_meta_builder.obj().copy();
@@ -188,4 +179,4 @@ string MongoMessageCollection::collectionName() const
   return coll_;
 }
 
-} // namespace
+}  // namespace
