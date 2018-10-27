@@ -39,9 +39,9 @@
 #ifndef WAREHOUSE_ROS_MONGO_QUERY_RESULTS_H
 #define WAREHOUSE_ROS_MONGO_QUERY_RESULTS_H
 
+#include <warehouse_ros_mongo/metadata.h>
 #include <mongo/client/dbclientcursor.h>
 #include <warehouse_ros/query_results.h>
-#include <warehouse_ros_mongo/metadata.h>
 #include <boost/optional.hpp>
 #include <memory>
 
