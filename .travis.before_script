@@ -1,5 +1,0 @@
-git clone -b 26compat https://github.com/mongodb/mongo-cxx-driver.git
-apt-get -qq install scons mongodb
-cd mongo-cxx-driver
-scons --prefix=/usr/local/ --full --use-system-boost --disable-warnings-as-errors
-#scons install
