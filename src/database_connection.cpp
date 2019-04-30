@@ -111,7 +111,7 @@ string MongoDatabaseConnection::messageType(const string& db, const string& coll
   if (!isConnected())
     throw warehouse_ros::DbConnectException("Cannot look up metatable.");
   const string meta_ns = db + ".ros_message_collections";
-  std::auto_ptr<mongo::DBClientCursor> cursor = conn_->query(meta_ns, BSON("name" << coll));
+  boost::shared_ptr<mongo::DBClientCursor> cursor = conn_->query(meta_ns, BSON("name" << coll));
   mongo::BSONObj obj = cursor->next();
   return obj.getStringField("type");
 }
