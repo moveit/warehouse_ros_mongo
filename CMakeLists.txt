@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 2.8.3)
 project(warehouse_ros_mongo)
 
+add_compile_options(-std=c++11)
+
 list(APPEND CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake/")
 
 find_package(catkin REQUIRED

@@ -41,7 +41,6 @@
 
 #include <warehouse_ros/database_connection.h>
 #include <warehouse_ros_mongo/message_collection.h>
-#include <boost/shared_ptr.hpp>
 
 namespace warehouse_ros_mongo
 {
@@ -63,7 +62,7 @@ public:
   std::string messageType(const std::string& db_name, const std::string& collection_name);
 
 protected:
-  boost::shared_ptr<mongo::DBClientConnection> conn_;
+  std::shared_ptr<mongo::DBClientConnection> conn_;
 
   std::string host_;
   unsigned port_;

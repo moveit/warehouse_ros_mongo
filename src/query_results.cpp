@@ -40,8 +40,8 @@
 
 namespace warehouse_ros_mongo
 {
-MongoResultIterator::MongoResultIterator(boost::shared_ptr<mongo::DBClientConnection> conn,
-                                         boost::shared_ptr<mongo::GridFS> gfs, const std::string& ns,
+MongoResultIterator::MongoResultIterator(std::shared_ptr<mongo::DBClientConnection> conn,
+                                         std::shared_ptr<mongo::GridFS> gfs, const std::string& ns,
                                          const mongo::Query& query)
   : cursor_(new Cursor(conn->query(ns, query))), gfs_(gfs)
 {
