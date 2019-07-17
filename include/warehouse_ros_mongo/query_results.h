@@ -47,10 +47,7 @@
 
 namespace warehouse_ros_mongo
 {
-// To avoid some const-correctness issues we wrap Mongo's returned auto_ptr in
-// another pointer
-typedef std::unique_ptr<mongo::DBClientCursor> Cursor;
-typedef std::unique_ptr<Cursor> CursorPtr;
+typedef std::unique_ptr<mongo::DBClientCursor> CursorPtr;
 
 class MongoResultIterator : public warehouse_ros::ResultIteratorHelper
 {
