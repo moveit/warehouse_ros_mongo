@@ -85,7 +85,7 @@ public:
   }
 
 protected:
-  boost::shared_ptr<BSONObjBuilder> builder_;
+  std::shared_ptr<BSONObjBuilder> builder_;
 
   void update()
   {

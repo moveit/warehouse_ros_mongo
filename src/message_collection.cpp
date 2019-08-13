@@ -47,7 +47,7 @@ namespace warehouse_ros_mongo
 {
 using std::string;
 
-MongoMessageCollection::MongoMessageCollection(boost::shared_ptr<mongo::DBClientConnection> conn, const string& db,
+MongoMessageCollection::MongoMessageCollection(std::shared_ptr<mongo::DBClientConnection> conn, const string& db,
                                                const string& coll)
   : conn_(conn), gfs_(new mongo::GridFS(*conn, db)), ns_(db + "." + coll), db_(db), coll_(coll)
 {

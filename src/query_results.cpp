@@ -40,21 +40,21 @@
 
 namespace warehouse_ros_mongo
 {
-MongoResultIterator::MongoResultIterator(boost::shared_ptr<mongo::DBClientConnection> conn,
-                                         boost::shared_ptr<mongo::GridFS> gfs, const std::string& ns,
+MongoResultIterator::MongoResultIterator(std::shared_ptr<mongo::DBClientConnection> conn,
+                                         std::shared_ptr<mongo::GridFS> gfs, const std::string& ns,
                                          const mongo::Query& query)
-  : cursor_(new Cursor(conn->query(ns, query))), gfs_(gfs)
+  : cursor_(conn->query(ns, query)), gfs_(gfs)
 {
-  if ((*cursor_)->more())
-    next_ = (*cursor_)->nextSafe();
+  if (cursor_->more())
+    next_ = cursor_->nextSafe();
 }
 
 bool MongoResultIterator::next()
 {
   ROS_ASSERT(next_);
-  if ((*cursor_)->more())
+  if (cursor_->more())
   {
-    next_ = (*cursor_)->nextSafe();
+    next_ = cursor_->nextSafe();
     return true;
   }
   else
