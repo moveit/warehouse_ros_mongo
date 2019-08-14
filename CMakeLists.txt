@@ -58,9 +58,7 @@ target_link_libraries(${PROJECT_NAME} ${catkin_LIBRARIES} ${MongoDB_LIBRARIES} $
 if(CATKIN_ENABLE_TESTING)
   add_executable(test_warehouse_ros_mongo_cpp test/test_warehouse_ros_mongo.cpp)
   target_link_libraries(test_warehouse_ros_mongo_cpp warehouse_ros_mongo ${GTEST_LIBRARIES})
-
-  # Disable unit test, because it hangs in Travis. TODO: Provide a mongodb server in Travis.
-  # add_rostest(test/warehouse_ros_mongo.test)
+  add_rostest(test/warehouse_ros_mongo.test)
 endif()
 
 install(PROGRAMS src/mongo_wrapper_ros.py DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})

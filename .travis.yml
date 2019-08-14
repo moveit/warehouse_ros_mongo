@@ -11,11 +11,12 @@ notifications:
 
 env:
   global:
+    - CXXFLAGS="-Wall -Wextra"
     - WARNINGS_OK=false
     - ROS_REPO=ros
   matrix:
     - ROS_DISTRO=melodic  TEST=clang-format,catkin_lint
-    - ROS_DISTRO=melodic
+    - ROS_DISTRO=melodic  BEFORE_SCRIPT="apt-get -qq install -y mongodb-server && service mongodb start"
 
 before_script:
   - git clone -q --depth=1 https://github.com/ros-planning/moveit_ci.git .moveit_ci
