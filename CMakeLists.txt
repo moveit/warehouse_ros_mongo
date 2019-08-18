@@ -28,8 +28,6 @@ endif()
 
 file(MAKE_DIRECTORY "${CATKIN_DEVEL_PREFIX}/include")
 
-catkin_python_setup()
-
 catkin_package(
   INCLUDE_DIRS include
   LIBRARIES ${PROJECT_NAME}
@@ -60,8 +58,6 @@ if(CATKIN_ENABLE_TESTING)
   target_link_libraries(test_warehouse_ros_mongo_cpp warehouse_ros_mongo ${GTEST_LIBRARIES})
   add_rostest(test/warehouse_ros_mongo.test)
 endif()
-
-install(PROGRAMS src/mongo_wrapper_ros.py DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
 
 install(TARGETS ${PROJECT_NAME} LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION})
 
