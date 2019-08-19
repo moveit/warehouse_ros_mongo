@@ -45,7 +45,6 @@ configure_file("include/${PROJECT_NAME}/config.h.in" "${CATKIN_DEVEL_PREFIX}/inc
 include_directories(${CATKIN_DEVEL_PREFIX}/include include ${catkin_INCLUDE_DIRS} ${MongoDB_INCLUDE_DIR} ${Boost_INCLUDE_DIRS})
 
 set(warehouse_srcs
-  src/warehouse_ros_mongo_dummy.cpp
   src/query_results.cpp
   src/message_collection.cpp
   src/database_connection.cpp)
