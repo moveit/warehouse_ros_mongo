@@ -101,7 +101,7 @@ TEST(MongoRos, MongoRos)
   Query::Ptr q1 = coll.createQuery();
   q1->append("name", "qux");
   vector<PoseMetaPtr> res = coll.queryList(q1, true);
-  EXPECT_EQ(1u, res.size());
+  ASSERT_EQ(1u, res.size());
   EXPECT_EQ("qux", res[0]->lookupString("name"));
   EXPECT_DOUBLE_EQ(53, res[0]->lookupDouble("x"));
 
@@ -115,7 +115,7 @@ TEST(MongoRos, MongoRos)
   vector<PoseMetaPtr> poses = coll.queryList(q2, false, "name", false);
 
   // Verify poses.
-  EXPECT_EQ(3u, poses.size());
+  ASSERT_EQ(3u, poses.size());
   EXPECT_EQ(p1, *poses[0]);
   EXPECT_EQ(p2, *poses[1]);
   EXPECT_EQ(p1, *poses[2]);
