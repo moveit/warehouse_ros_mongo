@@ -57,7 +57,7 @@ typedef PoseWithMetadata::ConstPtr PoseMetaPtr;
 // Helper function that creates metadata for a message.
 // Here we'll use the x and y position, as well as a 'name'
 // field that isn't part of the original message.
-Metadata::Ptr makeMetadata(PoseCollection coll, const gm::Pose& p, const string& n)
+Metadata::Ptr makeMetadata(const PoseCollection& coll, const gm::Pose& p, const string& n)
 {
   Metadata::Ptr meta = coll.createMetadata();
   meta->append("x", p.position.x);

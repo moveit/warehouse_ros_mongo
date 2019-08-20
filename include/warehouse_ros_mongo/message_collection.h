@@ -52,7 +52,7 @@ using warehouse_ros::ResultIteratorHelper;
 class MongoMessageCollection : public warehouse_ros::MessageCollectionHelper
 {
 public:
-  MongoMessageCollection(std::shared_ptr<mongo::DBClientConnection> conn, const std::string& db_name,
+  MongoMessageCollection(const std::shared_ptr<mongo::DBClientConnection>& conn, const std::string& db_name,
                          const std::string& collection_name);
 
   bool initialize(const std::string& datatype, const std::string& md5);
