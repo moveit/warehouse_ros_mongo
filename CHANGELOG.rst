@@ -2,6 +2,13 @@
 Changelog for package warehouse_ros
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.9.0 (2019-08-14)
+------------------
+* Use std pointers
+* Fix catkin issues
+* Refactored Warehouse ROS for pluginlib
+* Contributors: Christian Rauch, Connor Brew, Dave Coleman, Robert Haschke, v4hn
+
 0.8.8 (2014-10-01)
 ------------------
 * Merge pull request `#13 <https://github.com/ros-planning/warehouse_ros/issues/13>`_ from corot/master
