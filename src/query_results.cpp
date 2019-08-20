@@ -38,12 +38,14 @@
 
 #include <warehouse_ros_mongo/query_results.h>
 
+#include <utility>
+
 namespace warehouse_ros_mongo
 {
-MongoResultIterator::MongoResultIterator(std::shared_ptr<mongo::DBClientConnection> conn,
+MongoResultIterator::MongoResultIterator(const std::shared_ptr<mongo::DBClientConnection>& conn,
                                          std::shared_ptr<mongo::GridFS> gfs, const std::string& ns,
                                          const mongo::Query& query)
-  : cursor_(conn->query(ns, query)), gfs_(gfs)
+  : cursor_(conn->query(ns, query)), gfs_(std::move(gfs))
 {
   if (cursor_->more())
     next_ = cursor_->nextSafe();
@@ -93,4 +95,4 @@ mongo::BSONObj MongoResultIterator::metadataRaw() const
   return next_->copy();
 }
 
-}  // namespace
+}  // namespace warehouse_ros_mongo

@@ -52,7 +52,7 @@ typedef std::unique_ptr<mongo::DBClientCursor> CursorPtr;
 class MongoResultIterator : public warehouse_ros::ResultIteratorHelper
 {
 public:
-  MongoResultIterator(std::shared_ptr<mongo::DBClientConnection> conn, std::shared_ptr<mongo::GridFS> gfs,
+  MongoResultIterator(const std::shared_ptr<mongo::DBClientConnection>& conn, std::shared_ptr<mongo::GridFS> gfs,
                       const std::string& ns, const mongo::Query& query);
   bool next();
   bool hasData() const;

@@ -17,6 +17,12 @@ find_package(Boost REQUIRED COMPONENTS system filesystem thread)
 find_package(OpenSSL REQUIRED)
 find_package(MongoDB REQUIRED)
 
+# At least gcc 7.4 has issues compiling against mongoclient with optimization > 1 enabled.
+# In this case, Labeler symbols LT, GT, etc. are null, causing weird results.
+if (CMAKE_COMPILER_IS_GNUCC)
+  add_compile_options(-O1)
+endif()
+
 if(EXISTS "${MongoDB_INCLUDE_DIR}/mongo/version.h")
   add_definitions(-DWAREHOUSE_ROS_MONGO_HAVE_MONGO_VERSION_H)
 endif()
@@ -27,8 +33,6 @@ if("${MongoDB_LIBRARIES}" MATCHES "\\.so$")
 endif()
 
 file(MAKE_DIRECTORY "${CATKIN_DEVEL_PREFIX}/include")
-
-catkin_python_setup()
 
 catkin_package(
   INCLUDE_DIRS include
@@ -47,7 +51,6 @@ configure_file("include/${PROJECT_NAME}/config.h.in" "${CATKIN_DEVEL_PREFIX}/inc
 include_directories(${CATKIN_DEVEL_PREFIX}/include include ${catkin_INCLUDE_DIRS} ${MongoDB_INCLUDE_DIR} ${Boost_INCLUDE_DIRS})
 
 set(warehouse_srcs
-  src/warehouse_ros_mongo_dummy.cpp
   src/query_results.cpp
   src/message_collection.cpp
   src/database_connection.cpp)
@@ -58,12 +61,8 @@ target_link_libraries(${PROJECT_NAME} ${catkin_LIBRARIES} ${MongoDB_LIBRARIES} $
 if(CATKIN_ENABLE_TESTING)
   add_executable(test_warehouse_ros_mongo_cpp test/test_warehouse_ros_mongo.cpp)
   target_link_libraries(test_warehouse_ros_mongo_cpp warehouse_ros_mongo ${GTEST_LIBRARIES})
-
-  # Disable unit test, because it hangs in Travis. TODO: Provide a mongodb server in Travis.
-  # add_rostest(test/warehouse_ros_mongo.test)
+  add_rostest(test/warehouse_ros_mongo.test)
 endif()
-
-install(PROGRAMS src/mongo_wrapper_ros.py DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
 
 install(TARGETS ${PROJECT_NAME} LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION})
 

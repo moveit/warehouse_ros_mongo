@@ -122,6 +122,6 @@ MessageCollectionHelper::Ptr MongoDatabaseConnection::openCollectionHelper(const
   return typename MessageCollectionHelper::Ptr(new MongoMessageCollection(conn_, db_name, collection_name));
 }
 
-}  // namespace
+}  // namespace warehouse_ros_mongo
 
 PLUGINLIB_EXPORT_CLASS(warehouse_ros_mongo::MongoDatabaseConnection, warehouse_ros::DatabaseConnection)

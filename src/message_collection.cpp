@@ -47,7 +47,7 @@ namespace warehouse_ros_mongo
 {
 using std::string;
 
-MongoMessageCollection::MongoMessageCollection(std::shared_ptr<mongo::DBClientConnection> conn, const string& db,
+MongoMessageCollection::MongoMessageCollection(const std::shared_ptr<mongo::DBClientConnection>& conn, const string& db,
                                                const string& coll)
   : conn_(conn), gfs_(new mongo::GridFS(*conn, db)), ns_(db + "." + coll), db_(db), coll_(coll)
 {
@@ -106,7 +106,7 @@ ResultIteratorHelper::Ptr MongoMessageCollection::query(Query::ConstPtr query, c
                                                         bool ascending) const
 {
   mongo::Query mquery(downcastQuery(query));
-  if (sort_by.size() > 0)
+  if (!sort_by.empty())
     mquery.sort(sort_by, ascending ? 1 : -1);
   ROS_DEBUG_NAMED("query", "Sending query %s to %s", mquery.toString().c_str(), ns_.c_str());
   return typename ResultIteratorHelper::Ptr(new MongoResultIterator(conn_, gfs_, ns_, mquery));
@@ -134,10 +134,10 @@ unsigned MongoMessageCollection::removeMessages(Query::ConstPtr query)
 
   unsigned num_removed = 0;
   // Also remove the raw messages from gridfs
-  for (std::vector<mongo::BSONObj>::iterator it = metas.begin(); it != metas.end(); ++it)
+  for (const mongo::BSONObj& meta : metas)
   {
     mongo::OID id;
-    (*it)["blob_id"].Val(id);
+    meta["blob_id"].Val(id);
     gfs_->removeFile(id.toString());
     ++num_removed;
   }
@@ -151,7 +151,7 @@ void MongoMessageCollection::modifyMetadata(Query::ConstPtr q, Metadata::ConstPt
 
   std::vector<mongo::BSONObj> metas;
   listMetadata(query, metas);
-  if (metas.size() == 0)
+  if (metas.empty())
     throw warehouse_ros::NoMatchingMessageException(coll_);
   mongo::BSONObj orig = metas.front();
   mongo::BSONObjBuilder new_meta_builder;
@@ -179,4 +179,4 @@ string MongoMessageCollection::collectionName() const
   return coll_;
 }
 
-}  // namespace
+}  // namespace warehouse_ros_mongo
