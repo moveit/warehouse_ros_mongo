@@ -17,6 +17,12 @@ find_package(Boost REQUIRED COMPONENTS system filesystem thread)
 find_package(OpenSSL REQUIRED)
 find_package(MongoDB REQUIRED)
 
+# At least gcc 7.4 has issues compiling against mongoclient with optimization > 1 enabled.
+# In this case, Labeler symbols LT, GT, etc. are null, causing weird results.
+if (CMAKE_COMPILER_IS_GNUCC)
+  add_compile_options(-O1)
+endif()
+
 if(EXISTS "${MongoDB_INCLUDE_DIR}/mongo/version.h")
   add_definitions(-DWAREHOUSE_ROS_MONGO_HAVE_MONGO_VERSION_H)
 endif()
