@@ -46,7 +46,11 @@ using std::string;
 
 MongoDatabaseConnection::MongoDatabaseConnection() : host_("localhost"), port_(27017), timeout_(60.0)
 {
-  mongo::client::initialize();
+  if (!initialized_)
+  {
+    mongo::client::initialize();
+    initialized_ = true;
+  }
 }
 
 bool MongoDatabaseConnection::setParams(const string& host, unsigned port, float timeout)
