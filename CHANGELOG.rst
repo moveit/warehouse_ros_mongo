@@ -2,6 +2,12 @@
 Changelog for package warehouse_ros
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.9.1 (2019-09-28)
+------------------
+* Initialize mongo client only once (`#28 <https://github.com/ros-planning/warehouse_ros_mongo/issues/28>`_)
+* Restore mongod python wrapper
+* Contributors: Masaki Murooka, Robert Haschke
+
 0.9.0 (2019-08-14)
 ------------------
 * Use std pointers
