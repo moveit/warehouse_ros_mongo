@@ -46,10 +46,12 @@ using std::string;
 
 MongoDatabaseConnection::MongoDatabaseConnection() : host_("localhost"), port_(27017), timeout_(60.0)
 {
-  if (!initialized_)
+  static bool initialized = false;  // Initialize only once
+  // libmongoclient 1.1.2 (in Bionic) doesn't require this anymore
+  if (!initialized)
   {
+    initialized = true;
     mongo::client::initialize();
-    initialized_ = true;
   }
 }
 

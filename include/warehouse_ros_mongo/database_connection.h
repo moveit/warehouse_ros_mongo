@@ -68,12 +68,8 @@ protected:
   unsigned port_;
   float timeout_;
 
-  static bool initialized_;
-
   MessageCollectionHelper::Ptr openCollectionHelper(const std::string& db_name, const std::string& collection_name);
 };
-
-bool MongoDatabaseConnection::initialized_ = false;
 
 }  // namespace
 
