@@ -9,6 +9,7 @@
 #   - ~database location: where the db is stored.  Defaults to /tmp/db.
 #   - ~overwrite: whether to overwrite existing db.  Defaults to false.
 
+from __future__ import print_function
 import roslib; roslib.load_manifest('warehouse_ros')
 import rospy
 import subprocess as sp
@@ -40,7 +41,7 @@ def is_lucid_or_maverick():
         rospy.logdebug('/etc/issue does not exist')
 
 def print_help_message():
-    print """
+    print("""
 Usage: rosrun warehouse_ros_mongo mongo_wrapper_ros.py
 Start the mongodb database server.  Configured using the following ROS parameters.  
     
@@ -52,7 +53,7 @@ Parameters in parent namespace
 - db_path: where the db is stored on the filesystem.  Defaults to /tmp/db.
 - database_path: same as db_path.  For backward compatibility.
 - overwrite: whether to overwrite existing database if it exists.  Defaults to false.
-"""
+""")
 
 if __name__ == '__main__':
 
@@ -105,7 +106,7 @@ if __name__ == '__main__':
             rospy.loginfo("Ignoring mongod's nonstandard return code of 12")
         else:
             rospy.logerr("Mongo process exited with error code {0}".format(e.returncode))
-    except OSError, e:
+    except OSError as e:
         rospy.logerr("Execution failed: %s", e)
   
 
