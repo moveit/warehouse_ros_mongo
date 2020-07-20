@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 
+from __future__ import print_function
 import rospy
 from subprocess import check_call, CalledProcessError
 import sys
@@ -7,7 +8,7 @@ import os
 import shutil
 
 def print_help_message():
-    print """
+    print("""
 Usage: rosrun warehouse_ros_mongo mongo_wrapper_ros.py
 Start the mongodb database server, configured using the following ROS parameters:
 
@@ -18,7 +19,7 @@ Start the mongodb database server, configured using the following ROS parameters
 * parameters in parent namespace
   - db_path: where the db is stored on the filesystem.  Defaults to /tmp/db.
   - overwrite: whether to overwrite existing database if it exists.  Defaults to false.
-"""
+""")
 
 if '--help' in sys.argv:
     print_help_message()
@@ -29,7 +30,7 @@ path_param = rospy.get_param('~database_path' , None)
 if path_param is None:
     path_param = rospy.get_param('~db_path' , '/tmp/db')
 else:
-    print 'Parameter "database_path" is deprecated. Please use "db_path" instead.'
+    print('Parameter "database_path" is deprecated. Please use "db_path" instead.')
 dbpath = os.path.expanduser(path_param)
 overwrite = rospy.get_param('~overwrite', False)
 
