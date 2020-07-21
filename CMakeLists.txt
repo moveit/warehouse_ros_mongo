@@ -23,7 +23,9 @@ if (CMAKE_COMPILER_IS_GNUCC)
   add_compile_options(-O1)
 endif()
 
-if(EXISTS "${MongoDB_INCLUDE_DIR}/mongo/version.h")
+include(CheckIncludeFileCXX)
+check_include_file_cxx("mongo/version.h" HAVE_MONGO_VERSION_H)
+if(HAVE_MONGO_VERSION_H)
   add_definitions(-DWAREHOUSE_ROS_MONGO_HAVE_MONGO_VERSION_H)
 endif()
 
