@@ -2,6 +2,15 @@
 Changelog for package warehouse_ros
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.9.2 (2020-07-21)
+------------------
+* Proper cmake test for mongo/version.h
+* Bump cmake version to 3.0.2
+* ROS test: Start mongodb
+* mongo_wrapper_ros.py: Handle permission errors creating database path
+* python3 syntax compatibility
+* Contributors: Robert Haschke
+
 0.9.1 (2019-09-28)
 ------------------
 * Initialize mongo client only once (`#28 <https://github.com/ros-planning/warehouse_ros_mongo/issues/28>`_)
