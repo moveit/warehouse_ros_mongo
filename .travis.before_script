@@ -1,6 +1,5 @@
 #!/bin/bash
-apt-get -qq install -y scons mongodb-server
-service mongodb start
+apt-get -qq install -y scons
 
 # Install mongo C++ client lib from source
 git clone -b 26compat https://github.com/mongodb/mongo-cxx-driver.git

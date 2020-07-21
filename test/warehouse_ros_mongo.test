@@ -1,3 +1,4 @@
 <launch>
+	<node name="$(anon mongo_wrapper_ros)" cwd="ROS_HOME" pkg="warehouse_ros_mongo" type="mongo_wrapper_ros.py"/>
 	<test pkg="warehouse_ros_mongo" type="test_warehouse_ros_mongo_cpp" test-name="test_warehouse_ros_mongo_cpp"/>
 </launch>

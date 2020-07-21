@@ -16,7 +16,7 @@ env:
     - ROS_REPO=ros
   matrix:
     - ROS_DISTRO=melodic  TEST=clang-format,catkin_lint
-    - ROS_DISTRO=melodic  BEFORE_SCRIPT="apt-get -qq install -y mongodb-server && service mongodb start"
+    - ROS_DISTRO=melodic
     - ROS_DISTRO=kinetic  BEFORE_SCRIPT="\$CI_SOURCE_PATH/.travis.before_script"
 
 before_script:
