@@ -40,6 +40,8 @@
 
 #include <utility>
 
+static const rclcpp::Logger LOGGER = rclcpp::get_logger("warehouse_ros_mongo.query_results");
+
 namespace warehouse_ros_mongo
 {
 MongoResultIterator::MongoResultIterator(const std::shared_ptr<mongo::DBClientConnection>& conn,
@@ -53,7 +55,7 @@ MongoResultIterator::MongoResultIterator(const std::shared_ptr<mongo::DBClientCo
 
 bool MongoResultIterator::next()
 {
-  ROS_ASSERT(next_);
+  RCLCPP_FATAL_EXPRESSION(LOGGER, !next_, "Empty MongoDB result iterator.");
   if (cursor_->more())
   {
     next_ = cursor_->nextSafe();
@@ -73,7 +75,7 @@ bool MongoResultIterator::hasData() const
 
 warehouse_ros::Metadata::ConstPtr MongoResultIterator::metadata() const
 {
-  ROS_ASSERT(next_);
+  RCLCPP_FATAL_EXPRESSION(LOGGER, !next_, "Empty MongoDB result iterator.");
   return typename warehouse_ros::Metadata::ConstPtr(new MongoMetadata(next_->copy()));
 }
 
@@ -83,7 +85,7 @@ std::string MongoResultIterator::message() const
   (*next_)["blob_id"].Val(blob_id);
   mongo::BSONObj q = BSON("_id" << blob_id);
   mongo::GridFile f = gfs_->findFile(q);
-  ROS_ASSERT(f.exists());
+  rcpputils::assert_true(f.exists());
   std::stringstream ss(std::ios_base::out);
   f.write(ss);
   return ss.str();
@@ -91,7 +93,7 @@ std::string MongoResultIterator::message() const
 
 mongo::BSONObj MongoResultIterator::metadataRaw() const
 {
-  ROS_ASSERT(next_);
+  RCLCPP_FATAL_EXPRESSION(LOGGER, !next_, "Empty MongoDB result iterator.");
   return next_->copy();
 }
 
