@@ -66,7 +66,7 @@ if(CATKIN_ENABLE_TESTING)
   add_rostest(test/warehouse_ros_mongo.test)
 endif()
 
-install(PROGRAMS scripts/mongo_wrapper_ros.py DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
+catkin_install_python(PROGRAMS scripts/mongo_wrapper_ros.py DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
 
 install(TARGETS ${PROJECT_NAME} LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION})
 
