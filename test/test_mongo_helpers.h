@@ -47,7 +47,7 @@ inline bool operator==(const Pose& p1, const Pose& p2)
   return (pos1.x == pos2.x) && (pos1.y == pos2.y) && (pos1.z == pos2.z) && (q1.x == q2.x) && (q1.y == q2.y) &&
          (q1.z == q2.z) && (q1.w == q2.w);
 }
-}
+}  // namespace geometry_msgs
 
 inline warehouse_ros_mongo::MongoMetadata& downcastMetadata(warehouse_ros::Metadata::ConstPtr metadata)
 {

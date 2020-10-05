@@ -310,6 +310,6 @@ private:
   }
 };
 
-}  // namespace
+}  // namespace warehouse_ros_mongo
 
 #endif  // include guard

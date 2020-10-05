@@ -44,9 +44,9 @@
 
 namespace warehouse_ros_mongo
 {
+using warehouse_ros::MessageCollectionHelper;
 using warehouse_ros::Metadata;
 using warehouse_ros::Query;
-using warehouse_ros::MessageCollectionHelper;
 using warehouse_ros::ResultIteratorHelper;
 
 class MongoMessageCollection : public warehouse_ros::MessageCollectionHelper
@@ -117,6 +117,6 @@ private:
   const std::string coll_;
 };
 
-}  // namespace
+}  // namespace warehouse_ros_mongo
 
 #endif  // include guard

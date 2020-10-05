@@ -66,6 +66,6 @@ private:
   std::shared_ptr<mongo::GridFS> gfs_;
 };
 
-}  // namespace
+}  // namespace warehouse_ros_mongo
 
 #endif  // include guard

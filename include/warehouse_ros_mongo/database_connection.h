@@ -71,6 +71,6 @@ protected:
   MessageCollectionHelper::Ptr openCollectionHelper(const std::string& db_name, const std::string& collection_name);
 };
 
-}  // namespace
+}  // namespace warehouse_ros_mongo
 
 #endif  // include guard

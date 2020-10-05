@@ -43,12 +43,12 @@
 #include "test_mongo_helpers.h"
 
 namespace gm = geometry_msgs;
-using warehouse_ros::Metadata;
-using warehouse_ros::Query;
-using warehouse_ros::NoMatchingMessageException;
-using std::vector;
-using std::string;
 using std::cout;
+using std::string;
+using std::vector;
+using warehouse_ros::Metadata;
+using warehouse_ros::NoMatchingMessageException;
+using warehouse_ros::Query;
 
 typedef warehouse_ros::MessageCollection<gm::Pose> PoseCollection;
 typedef warehouse_ros::MessageWithMetadata<gm::Pose> PoseWithMetadata;
