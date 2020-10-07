@@ -65,6 +65,10 @@ ament_target_dependencies(${PROJECT_NAME}
 target_link_libraries(${PROJECT_NAME} ${MongoDB_LIBRARIES})
 
 if(BUILD_TESTING)
+
+  find_package(launch_testing_ament_cmake)
+  add_launch_test(test/warehouse_ros_mongo.launch.py)
+
   find_package(ament_cmake_gtest REQUIRED)
   ament_add_gtest(test_warehouse_ros_mongo_cpp test/test_warehouse_ros_mongo.cpp)
   target_link_libraries(test_warehouse_ros_mongo_cpp warehouse_ros_mongo ${GTEST_LIBRARIES} ${OPENSSL_CRYPTO_LIBRARY})

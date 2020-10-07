@@ -1,7 +1,8 @@
 from launch import LaunchDescription
 from launch_ros.actions import Node
+from launch_testing.actions import ReadyToTest
 
-def generate_launch_description():
+def generate_test_description():
     return LaunchDescription([
         Node(
             package='warehouse_ros_mongo',
@@ -12,5 +13,7 @@ def generate_launch_description():
                 {'warehouse_plugin': 'warehouse_ros_mongo::MongoDatabaseConnection'}
             ],
             output='screen'
-        )
+        ),
+
+        ReadyToTest()
     ])
