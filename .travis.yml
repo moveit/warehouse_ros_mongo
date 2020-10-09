@@ -15,7 +15,8 @@ env:
     - WARNINGS_OK=false
     - ROS_REPO=ros
   matrix:
-    - ROS_DISTRO=melodic  TEST=clang-format,catkin_lint
+    - ROS_DISTRO=noetic  TEST=clang-format,catkin_lint
+    - ROS_DISTRO=noetic
     - ROS_DISTRO=melodic
     - ROS_DISTRO=kinetic  BEFORE_SCRIPT="\$CI_SOURCE_PATH/.travis.before_script"
 
