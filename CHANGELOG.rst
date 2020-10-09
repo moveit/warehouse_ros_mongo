@@ -2,6 +2,12 @@
 Changelog for package warehouse_ros
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.10.0 (2020-10-09)
+-------------------
+* clang-format-10
+* Python3 compatibility layer for roslaunch in CMake (`#35 <https://github.com/ros-planning/warehouse_ros_mongo/issues/35>`_)
+* Contributors: Robert Haschke, Tyler Weaver
+
 0.9.2 (2020-07-21)
 ------------------
 * Proper cmake test for mongo/version.h
