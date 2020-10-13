@@ -14,13 +14,14 @@ env:
     - CXXFLAGS="-Wall -Wextra"
     - WARNINGS_OK=false
     - ROS_REPO=ros
-  matrix:
-    - ROS_DISTRO=noetic  TEST=clang-format,catkin_lint
-    - ROS_DISTRO=noetic
-    - ROS_DISTRO=melodic
-    - ROS_DISTRO=kinetic  BEFORE_SCRIPT="\$CI_SOURCE_PATH/.travis.before_script"
+    - UPSTREAM_WORKSPACE=warehouse_ros_mongo.repos
+jobs:
+  fast_finish: true
+  include:
+    - env: TEST="clang-format ament_lint" ROS_DISTRO=foxy
+    - env: ROS_DISTRO=foxy
 
 before_script:
-  - git clone -q --depth=1 https://github.com/ros-planning/moveit_ci.git .moveit_ci
+  - git clone -q -b ros2 --depth=1 https://github.com/ros-planning/moveit_ci.git .moveit_ci
 script:
   - source .moveit_ci/travis.sh
