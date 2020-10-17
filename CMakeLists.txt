@@ -16,7 +16,7 @@ find_package(warehouse_ros REQUIRED)
 find_package(class_loader REQUIRED)
 find_package(Boost REQUIRED COMPONENTS system filesystem thread)
 find_package(OpenSSL REQUIRED)
-find_package(MongoDB REQUIRED)
+find_package(MONGODB REQUIRED)
 find_package(ament_cmake_python REQUIRED)
 find_package(rclpy REQUIRED)
 
@@ -25,7 +25,7 @@ ament_python_install_package(${PROJECT_NAME})
 
 # At least gcc 7.4 has issues compiling against mongoclient with optimization > 1 enabled.
 # In this case, Labeler symbols LT, GT, etc. are null, causing weird results.
-if (CMAKE_COMPILER_IS_GNUCC)
+if(CMAKE_COMPILER_IS_GNUCC)
   add_compile_options(-O1)
 endif()
 
@@ -36,17 +36,17 @@ if(HAVE_MONGO_VERSION_H)
 endif()
 
 set(MONGO_EXPORT)
-if("${MongoDB_LIBRARIES}" MATCHES "\\.so$")
-  set(MONGO_EXPORT MongoDB)
+if("${MONGODB_LIBRARIES}" MATCHES "\\.so$")
+  set(MONGO_EXPORT MONGODB)
 endif()
 
-if (NOT MongoDB_EXPOSE_MACROS)
+if(NOT MONGODB_EXPOSE_MACROS_FLAG)
   add_definitions(-DMONGO_EXPOSE_MACROS)
 endif()
 
 configure_file("include/${PROJECT_NAME}/config.h.in" "${CMAKE_BINARY_DIR}/include/${PROJECT_NAME}/config.h")
 
-include_directories(${CMAKE_BINARY_DIR}/include include ${MongoDB_INCLUDE_DIR})
+include_directories(${CMAKE_BINARY_DIR}/include include ${MONGODB_INCLUDE_DIR})
 
 set(warehouse_srcs
   src/query_results.cpp
@@ -62,7 +62,7 @@ ament_target_dependencies(${PROJECT_NAME}
   Boost
   OpenSSL
 )
-target_link_libraries(${PROJECT_NAME} ${MongoDB_LIBRARIES})
+target_link_libraries(${PROJECT_NAME} ${MONGODB_LIBRARIES})
 
 if(BUILD_TESTING)
 
@@ -100,7 +100,7 @@ ament_export_dependencies(warehouse_ros)
 ament_export_dependencies(class_loader)
 ament_export_dependencies(Boost)
 ament_export_dependencies(OpenSSL)
-ament_export_dependencies(MongoDB)
+ament_export_dependencies(MONGODB)
 ament_export_dependencies(ament_cmake_python)
 ament_export_dependencies(rclpy)
 
