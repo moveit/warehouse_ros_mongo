@@ -74,7 +74,8 @@ bool MongoDatabaseConnection::setTimeout(float timeout)
 bool MongoDatabaseConnection::connect()
 {
   const string db_address = (boost::format("%1%:%2%") % host_ % port_).str();
-  const rclcpp::Time end = rclcpp::Clock(RCL_SYSTEM_TIME).now() + rclcpp::Duration(std::chrono::duration<double>(timeout_));
+  const rclcpp::Time end =
+      rclcpp::Clock(RCL_SYSTEM_TIME).now() + rclcpp::Duration(std::chrono::duration<double>(timeout_));
 
   while (rclcpp::ok() && rclcpp::Clock(RCL_SYSTEM_TIME).now() < end)
   {
@@ -94,7 +95,8 @@ bool MongoDatabaseConnection::connect()
   if (!conn_ || conn_->isFailed())
   {
     RCLCPP_ERROR_STREAM(LOGGER, "Unable to connect to the database at '"
-                     << db_address << "'. If you just created the database, it could take a while for initial setup.");
+                                    << db_address
+                                    << "'. If you just created the database, it could take a while for initial setup.");
     return false;
   }
 

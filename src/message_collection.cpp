@@ -68,7 +68,8 @@ bool MongoMessageCollection::initialize(const std::string& datatype, const std::
   }
   else if (!conn_->count(meta_ns, BSON("name" << coll_ << "md5sum" << md5)))
   {
-    RCLCPP_ERROR(LOGGER, "The md5 sum for message %s changed to %s. Only reading metadata.", datatype.c_str(), md5.c_str());
+    RCLCPP_ERROR(LOGGER, "The md5 sum for message %s changed to %s. Only reading metadata.", datatype.c_str(),
+                 md5.c_str());
     return false;
   }
   return true;
