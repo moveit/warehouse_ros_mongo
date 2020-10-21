@@ -36,12 +36,14 @@
  * \author Bhaskara Marthi
  */
 
-#include <std_msgs/String.h>
+#include <std_msgs/msg/string.hpp>
 #include <warehouse_ros_mongo/message_collection.h>
 #include <boost/foreach.hpp>
 #ifdef WAREHOUSE_ROS_MONGO_HAVE_MONGO_VERSION_H
 #include <mongo/version.h>
 #endif
+
+static const rclcpp::Logger LOGGER = rclcpp::get_logger("warehouse_ros_mongo.message_collection");
 
 namespace warehouse_ros_mongo
 {
@@ -61,12 +63,13 @@ bool MongoMessageCollection::initialize(const std::string& datatype, const std::
   const string meta_ns = db_ + ".ros_message_collections";
   if (!conn_->count(meta_ns, BSON("name" << coll_)))
   {
-    ROS_DEBUG_NAMED("create_collection", "Inserting info for %s into metatable", coll_.c_str());
+    RCLCPP_DEBUG(LOGGER, "Inserting info for %s into metatable", coll_.c_str());
     conn_->insert(meta_ns, BSON("name" << coll_ << "type" << datatype << "md5sum" << md5));
   }
   else if (!conn_->count(meta_ns, BSON("name" << coll_ << "md5sum" << md5)))
   {
-    ROS_ERROR("The md5 sum for message %s changed to %s. Only reading metadata.", datatype.c_str(), md5.c_str());
+    RCLCPP_ERROR(LOGGER, "The md5 sum for message %s changed to %s. Only reading metadata.", datatype.c_str(),
+                 md5.c_str());
     return false;
   }
   return true;
@@ -98,7 +101,7 @@ void MongoMessageCollection::insert(char* msg, size_t msg_size, Metadata::ConstP
   file_obj["_id"].Val(blob_id);
   builder.append("blob_id", blob_id);
   mongo::BSONObj entry = builder.obj();
-  ROS_DEBUG_NAMED("insert", "Inserting %s into %s", entry.toString().c_str(), ns_.c_str());
+  RCLCPP_DEBUG(LOGGER, "Inserting %s into %s", entry.toString().c_str(), ns_.c_str());
   conn_->insert(ns_, entry);
 }
 
@@ -108,7 +111,7 @@ ResultIteratorHelper::Ptr MongoMessageCollection::query(Query::ConstPtr query, c
   mongo::Query mquery(downcastQuery(query));
   if (!sort_by.empty())
     mquery.sort(sort_by, ascending ? 1 : -1);
-  ROS_DEBUG_NAMED("query", "Sending query %s to %s", mquery.toString().c_str(), ns_.c_str());
+  RCLCPP_DEBUG(LOGGER, "Sending query %s to %s", mquery.toString().c_str(), ns_.c_str());
   return typename ResultIteratorHelper::Ptr(new MongoResultIterator(conn_, gfs_, ns_, mquery));
 }
 

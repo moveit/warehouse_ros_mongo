@@ -50,14 +50,14 @@ using warehouse_ros::Metadata;
 using warehouse_ros::NoMatchingMessageException;
 using warehouse_ros::Query;
 
-typedef warehouse_ros::MessageCollection<gm::Pose> PoseCollection;
-typedef warehouse_ros::MessageWithMetadata<gm::Pose> PoseWithMetadata;
+typedef warehouse_ros::MessageCollection<gm::msg::Pose> PoseCollection;
+typedef warehouse_ros::MessageWithMetadata<gm::msg::Pose> PoseWithMetadata;
 typedef PoseWithMetadata::ConstPtr PoseMetaPtr;
 
 // Helper function that creates metadata for a message.
 // Here we'll use the x and y position, as well as a 'name'
 // field that isn't part of the original message.
-Metadata::Ptr makeMetadata(const PoseCollection& coll, const gm::Pose& p, const string& n)
+Metadata::Ptr makeMetadata(const PoseCollection& coll, const gm::msg::Pose& p, const string& n)
 {
   Metadata::Ptr meta = coll.createMetadata();
   meta->append("x", p.position.x);
@@ -70,7 +70,7 @@ TEST(MongoRos, MongoRos)
 {
   // Set up db
   warehouse_ros_mongo::MongoDatabaseConnection conn;
-  conn.setParams("localhost", 27017, 60.0);
+  conn.setParams("localhost", 33829, 60.0);
   conn.connect();
   ASSERT_TRUE(conn.isConnected());
 
@@ -78,17 +78,17 @@ TEST(MongoRos, MongoRos)
   conn.dropDatabase("my_db");
 
   // Open the collection
-  PoseCollection coll = conn.openCollection<gm::Pose>("my_db", "poses");
+  PoseCollection coll = conn.openCollection<gm::msg::Pose>("my_db", "poses");
 
   // Arrange to index on metadata fields 'x' and 'name'
   // coll.ensureIndex("name");
   // coll.ensureIndex("x");
 
   // Add some poses and metadata
-  const gm::Pose p1 = makePose(24, 42, 0);
-  const gm::Pose p2 = makePose(10, 532, 3);
-  const gm::Pose p3 = makePose(53, 22, 5);
-  const gm::Pose p4 = makePose(22, -5, 33);
+  const gm::msg::Pose p1 = makePose(24, 42, 0);
+  const gm::msg::Pose p2 = makePose(10, 532, 3);
+  const gm::msg::Pose p3 = makePose(53, 22, 5);
+  const gm::msg::Pose p4 = makePose(22, -5, 33);
   coll.insert(p1, makeMetadata(coll, p1, "bar"));
   coll.insert(p2, makeMetadata(coll, p2, "baz"));
   coll.insert(p3, makeMetadata(coll, p3, "qux"));
@@ -152,13 +152,14 @@ TEST(MongoRos, MongoRos)
   EXPECT_EQ(p1, *coll.findOne(q5, false));
 
   // Check stored metadata
-  EXPECT_EQ("geometry_msgs/Pose", conn.messageType("my_db", "poses"));
+  EXPECT_EQ("geometry_msgs::msg::Pose", conn.messageType("my_db", "poses"));
 }
 
 int main(int argc, char** argv)
 {
-  ros::init(argc, argv, "client_test");
-  ros::NodeHandle nh;
+  rclcpp::init(argc, argv);
+  auto node = rclcpp::Node::make_shared("client_test");
+
   testing::InitGoogleTest(&argc, argv);
   return RUN_ALL_TESTS();
 }

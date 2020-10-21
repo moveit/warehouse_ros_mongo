@@ -40,9 +40,9 @@
 #ifndef WAREHOUSE_ROS_MONGO_CONFIG_H
 #define WAREHOUSE_ROS_MONGO_CONFIG_H
 
-#cmakedefine01 MongoDB_EXPOSE_MACROS
+#cmakedefine01 MONGODB_EXPOSE_MACROS_FLAG
 
-#if MongoDB_EXPOSE_MACROS
+#if MONGODB_EXPOSE_MACROS_FLAG
 #  define MONGO_EXPOSE_MACROS
 #  include <mongo/client/gridfs.h>
 #  include <mongo/client/undef_macros.h>

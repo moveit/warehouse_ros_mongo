@@ -28,7 +28,7 @@
  *
  */
 
-#include <geometry_msgs/Pose.h>
+#include <geometry_msgs/msg/pose.hpp>
 #include <warehouse_ros/message_with_metadata.h>
 #include <warehouse_ros_mongo/metadata.h>
 #include <cstring>
@@ -38,12 +38,12 @@ using std::ostream;
 
 namespace geometry_msgs
 {
-inline bool operator==(const Pose& p1, const Pose& p2)
+inline bool operator==(const msg::Pose& p1, const msg::Pose& p2)
 {
-  const Point& pos1 = p1.position;
-  const Point& pos2 = p2.position;
-  const Quaternion& q1 = p1.orientation;
-  const Quaternion& q2 = p2.orientation;
+  const msg::Point& pos1 = p1.position;
+  const msg::Point& pos2 = p2.position;
+  const msg::Quaternion& q1 = p1.orientation;
+  const msg::Quaternion& q2 = p2.orientation;
   return (pos1.x == pos2.x) && (pos1.y == pos2.y) && (pos1.z == pos2.z) && (q1.x == q2.x) && (q1.y == q2.y) &&
          (q1.z == q2.z) && (q1.w == q2.w);
 }
@@ -64,15 +64,16 @@ inline warehouse_ros_mongo::MongoQuery& downcastQuery(warehouse_ros::Query::Cons
 template <class T>
 ostream& operator<<(ostream& str, const warehouse_ros::MessageWithMetadata<T>& s)
 {
-  const T& msg = s;
-  str << "Message: " << msg;
+  // TODO: revert when message stream is enabled
+  // const T& msg = s;
+  // str << "Message: " << msg;
   str << "\nMetadata: " << downcastMetadata(s.metadata_).toString();
   return str;
 }
 
-geometry_msgs::Quaternion createQuaternionMsgFromYaw(double yaw)
+geometry_msgs::msg::Quaternion createQuaternionMsgFromYaw(double yaw)
 {
-  geometry_msgs::Quaternion q;
+  geometry_msgs::msg::Quaternion q;
   q.w = cos(yaw / 2);
   q.z = sin(yaw / 2);
   q.x = 0;
@@ -80,9 +81,9 @@ geometry_msgs::Quaternion createQuaternionMsgFromYaw(double yaw)
   return q;
 }
 
-inline geometry_msgs::Pose makePose(const double x, const double y, const double theta)
+inline geometry_msgs::msg::Pose makePose(const double x, const double y, const double theta)
 {
-  geometry_msgs::Pose p;
+  geometry_msgs::msg::Pose p;
   p.position.x = x;
   p.position.y = y;
   p.orientation = createQuaternionMsgFromYaw(theta);

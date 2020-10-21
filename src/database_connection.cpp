@@ -37,8 +37,10 @@
  */
 
 #include <mongo/client/init.h>
-#include <pluginlib/class_list_macros.h>
+#include <pluginlib/class_list_macros.hpp>
 #include <warehouse_ros_mongo/database_connection.h>
+
+static const rclcpp::Logger LOGGER = rclcpp::get_logger("warehouse_ros_mongo.database_connection");
 
 namespace warehouse_ros_mongo
 {
@@ -72,31 +74,33 @@ bool MongoDatabaseConnection::setTimeout(float timeout)
 bool MongoDatabaseConnection::connect()
 {
   const string db_address = (boost::format("%1%:%2%") % host_ % port_).str();
-  const ros::WallTime end = ros::WallTime::now() + ros::WallDuration(timeout_);
+  const rclcpp::Time end =
+      rclcpp::Clock(RCL_SYSTEM_TIME).now() + rclcpp::Duration(std::chrono::duration<double>(timeout_));
 
-  while (ros::ok() && ros::WallTime::now() < end)
+  while (rclcpp::ok() && rclcpp::Clock(RCL_SYSTEM_TIME).now() < end)
   {
     conn_.reset(new mongo::DBClientConnection());
     try
     {
-      ROS_DEBUG_STREAM_NAMED("db_connect", "Attempting to connect to MongoDB at " << db_address);
+      RCLCPP_DEBUG_STREAM(LOGGER, "Attempting to connect to MongoDB at " << db_address);
       conn_->connect(db_address);
       if (!conn_->isFailed())
         break;
     }
     catch (mongo::ConnectException& e)
     {
-      ros::Duration(1.0).sleep();
+      rclcpp::sleep_for(std::chrono::seconds(1));
     }
   }
   if (!conn_ || conn_->isFailed())
   {
-    ROS_ERROR_STREAM("Unable to connect to the database at '"
-                     << db_address << "'. If you just created the database, it could take a while for initial setup.");
+    RCLCPP_ERROR_STREAM(LOGGER, "Unable to connect to the database at '"
+                                    << db_address
+                                    << "'. If you just created the database, it could take a while for initial setup.");
     return false;
   }
 
-  ROS_DEBUG_STREAM_NAMED("db_connect", "Successfully connected to the DB");
+  RCLCPP_DEBUG_STREAM(LOGGER, "Successfully connected to the DB");
   return true;
 }
 
