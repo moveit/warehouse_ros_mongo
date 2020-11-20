@@ -2,6 +2,15 @@
 Changelog for package warehouse_ros
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+2.0.0 (2020-11-20)
+-----------
+* [ros2-migration] Port to ROS 2 (`#38 <https://github.com/ros-planning/warehouse_ros_mongo/issues/38>`_)
+  * Migrate package.xml and cmake files to ROS 2
+  * Apply ROS 2 migration steps to source files
+  * Compile on ROS 2 Foxy, enable CI
+  * Check clang-format, ament_lint
+* Contributors: Yu Yan
+
 0.10.0 (2020-10-09)
 -------------------
 * clang-format-10
