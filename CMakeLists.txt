@@ -95,7 +95,7 @@ install(FILES test/warehouse_ros_mongo.launch.py
 
 install(
   FILES cmake/FindMONGODB.cmake
-  DESTINATION lib/cmake/${PROJECT_NAME}
+  DESTINATION share/${PROJECT_NAME}/cmake
 )
 
 install(
