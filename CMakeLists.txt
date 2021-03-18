@@ -7,9 +7,12 @@ endif()
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
-if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
-  add_compile_options(-Wall -Wextra -Wpedantic)
-endif()
+# Set compile options 
+set(PROJECT_COMPILE_OPTIONS 
+  -Wall 
+  -Wextra 
+  -Wpedantic
+)
 
 list(APPEND CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake/")
 
@@ -60,6 +63,7 @@ set(warehouse_srcs
   src/database_connection.cpp)
 
 add_library(${PROJECT_NAME} SHARED ${warehouse_srcs})
+target_compile_options(${PROJECT_NAME} PRIVATE ${PROJECT_COMPILE_OPTIONS})
 ament_target_dependencies(${PROJECT_NAME}
   rclcpp
   std_msgs
@@ -80,6 +84,10 @@ if(BUILD_TESTING)
   install(TARGETS test_warehouse_ros_mongo_cpp
     DESTINATION lib/${PROJECT_NAME}
   )
+
+  # ament_lint
+  find_package(ament_lint_auto REQUIRED)
+  ament_lint_auto_find_test_dependencies()
 endif()
 
 install(PROGRAMS ${PROJECT_NAME}/mongo_wrapper_ros.py DESTINATION lib/${PROJECT_NAME})
