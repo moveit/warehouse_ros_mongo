@@ -50,7 +50,9 @@ MongoResultIterator::MongoResultIterator(const std::shared_ptr<mongo::DBClientCo
   : cursor_(conn->query(ns, query)), gfs_(std::move(gfs))
 {
   if (cursor_->more())
+  {
     next_ = cursor_->nextSafe();
+  }
 }
 
 bool MongoResultIterator::next()
@@ -70,7 +72,7 @@ bool MongoResultIterator::next()
 
 bool MongoResultIterator::hasData() const
 {
-  return (bool)next_;
+  return static_cast<bool>(next_);
 }
 
 warehouse_ros::Metadata::ConstPtr MongoResultIterator::metadata() const
