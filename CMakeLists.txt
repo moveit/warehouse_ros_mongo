@@ -13,12 +13,12 @@ set(PROJECT_COMPILE_OPTIONS
 list(APPEND CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake/")
 
 find_package(catkin REQUIRED COMPONENTS
+  class_loader
   roscpp
   rostest
   rostime
   std_msgs
   warehouse_ros
-  class_loader
 )
 find_package(Boost REQUIRED COMPONENTS system filesystem thread)
 find_package(OpenSSL REQUIRED)
@@ -60,18 +60,18 @@ configure_file("include/${PROJECT_NAME}/config.h.in" "${CATKIN_DEVEL_PREFIX}/inc
 include_directories(${CATKIN_DEVEL_PREFIX}/include include ${catkin_INCLUDE_DIRS} ${MongoDB_INCLUDE_DIR} ${Boost_INCLUDE_DIRS})
 
 set(warehouse_srcs
-  src/query_results.cpp
+  src/database_connection.cpp
   src/message_collection.cpp
-  src/database_connection.cpp)
+  src/query_results.cpp)
 
 add_library(${PROJECT_NAME} SHARED ${warehouse_srcs})
 target_compile_options(${PROJECT_NAME} PRIVATE ${PROJECT_COMPILE_OPTIONS})
 target_link_libraries(${PROJECT_NAME} ${catkin_LIBRARIES} ${MongoDB_LIBRARIES} ${OPENSSL_LIBRARIES} ${Boost_LIBRARIES})
 
 if(CATKIN_ENABLE_TESTING)
-  add_executable(test_warehouse_ros_mongo_cpp test/test_warehouse_ros_mongo.cpp)
-  target_link_libraries(test_warehouse_ros_mongo_cpp warehouse_ros_mongo ${GTEST_LIBRARIES})
-  add_rostest(test/warehouse_ros_mongo.test)
+  add_executable(test_${PROJECT_NAME}_cpp test/test_${PROJECT_NAME}.cpp)
+  target_link_libraries(test_${PROJECT_NAME}_cpp ${PROJECT_NAME} ${GTEST_LIBRARIES})
+  add_rostest(test/${PROJECT_NAME}.test)
 endif()
 
 install(PROGRAMS scripts/mongo_wrapper_ros.py DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
