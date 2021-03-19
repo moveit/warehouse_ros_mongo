@@ -3,6 +3,13 @@ project(warehouse_ros_mongo)
 
 add_compile_options(-std=c++11)
 
+# Set compile options 
+set(PROJECT_COMPILE_OPTIONS 
+  -Wall 
+  -Wextra 
+  -Wpedantic
+)
+
 list(APPEND CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake/")
 
 find_package(catkin REQUIRED COMPONENTS
@@ -58,6 +65,7 @@ set(warehouse_srcs
   src/database_connection.cpp)
 
 add_library(${PROJECT_NAME} SHARED ${warehouse_srcs})
+target_compile_options(${PROJECT_NAME} PRIVATE ${PROJECT_COMPILE_OPTIONS})
 target_link_libraries(${PROJECT_NAME} ${catkin_LIBRARIES} ${MongoDB_LIBRARIES} ${OPENSSL_LIBRARIES} ${Boost_LIBRARIES})
 
 if(CATKIN_ENABLE_TESTING)
