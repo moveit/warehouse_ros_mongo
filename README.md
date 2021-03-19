@@ -2,9 +2,9 @@
 
 Code for persisting ROS message data using MongoDB.  Contains C++ and Python libraries to serialize ROS data to MongoDB, as well as some handy scripts to record data from the command line.  Based on code split out of warehouse_ros.
 
-## Travis - Continuous Integration
+## GitHub Actions - Continuous Integration
 
-[![Build Status](https://travis-ci.org/ros-planning/warehouse_ros_mongo.svg?branch=jade-devel)](https://travis-ci.org/ros-planning/warehouse_ros_mongo)
+[![Format](https://github.com/ros-planning/warehouse_ros_mongo/actions/workflows/format.yml/badge.svg?branch=noetic-devel)](https://github.com/ros-planning/warehouse_ros_mongo/actions/workflows/format.yml?branch=noetic-devel) [![BuildAndTest](https://github.com/ros-planning/warehouse_ros_mongo/actions/workflows/industrial_ci_action.yml/badge.svg?branch=noetic-devel)](https://github.com/ros-planning/warehouse_ros_mongo/actions/workflows/industrial_ci_action.yml?branch=noetic-devel)
 
 ## Building from source
 
