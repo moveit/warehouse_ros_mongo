@@ -10,23 +10,44 @@ jobs:
     strategy:
       matrix:
         env:
-          - {ROS_DISTRO: melodic, ROS_REPO: main, CATKIN_LINT: pedatntic}
           - {
-              ROS_DISTRO: kinetic, ROS_REPO: main, 
-              BEFORE_BUILD_TARGET_WORKSPACE: './.ci.before_script', 
-              ROSDEP_SKIP_KEYS: 'libmongoclient-dev',
-              ADDITIONAL_DEBS: 'libssl-dev scons git'
-            }
+            ROS_DISTRO: melodic, 
+            ROS_REPO: main, 
+            CCOV_UPLOAD: true, 
+            CATKIN_LINT: pedatntic,
+            CMAKE_ARGS: "-DCMAKE_BUILD_TYPE=Debug -DCMAKE_C_FLAGS='--coverage' -DCMAKE_CXX_FLAGS='--coverage'",
+            AFTER_RUN_TARGET_TEST: './.ci.prepare_codecov',
+            ADDITIONAL_DEBS: 'lcov'
+          }
+          - {
+            ROS_DISTRO: kinetic, 
+            ROS_REPO: main, 
+            CCOV_UPLOAD: false, 
+            BEFORE_BUILD_TARGET_WORKSPACE: './.ci.mongo_source_install', 
+            ROSDEP_SKIP_KEYS: 'libmongoclient-dev',
+            ADDITIONAL_DEBS: 'libssl-dev scons git'
+          }
     env:
-      CCACHE_DIR: ~/.ccache
+      CCACHE_DIR: /home/runner/.ccache
+      BASEDIR: .base
+      CACHE_PREFIX: "${{ matrix.ROS_DISTRO }}-${{ matrix.ROS_REPO }}${{ matrix.CCOV_UPLOAD && '-ccov' || '' }}"
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - uses: actions/cache@v2
         with:
           path: ${{ env.CCACHE_DIR }}
-          key: ccache-${{ matrix.env.ROS_DISTRO }}-${{ matrix.env.ROS_REPO }}-${{ github.sha }}  
+          key: ccache-${{ env.CACHE_PREFIX }}-${{ github.sha }}  
           restore-keys: |
-            ccache-${{ matrix.env.ROS_DISTRO }}-${{ matrix.env.ROS_REPO }}
+            ccache-${{ env.CACHE_PREFIX }}
       - uses: 'ros-industrial/industrial_ci@master'
         env: ${{ matrix.env }}
+      - uses: actions/upload-artifact@v2
+        if: failure()
+        with:
+          name: test-results
+          path: ${{ env.BASEDIR }}/target_ws/**/test_results/**/*.xml
+      - uses: codecov/codecov-action@v1
+        if: ${{ matrix.env.CCOV_UPLOAD }} 
+        with:
+          files: ${{ env.BASEDIR }}/coverage.info
