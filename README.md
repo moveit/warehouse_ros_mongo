@@ -4,7 +4,7 @@ Code for persisting ROS message data using MongoDB.  Contains C++ and Python lib
 
 ## GitHub Actions - Continuous Integration
 
-[![Format](https://github.com/ros-planning/warehouse_ros_mongo/actions/workflows/format.yml/badge.svg?branch=melodic-devel)](https://github.com/ros-planning/warehouse_ros_mongo/actions/workflows/format.yml?branch=melodic-devel) [![BuildAndTest](https://github.com/ros-planning/warehouse_ros_mongo/actions/workflows/industrial_ci_action.yml/badge.svg?branch=melodic-devel)](https://github.com/ros-planning/warehouse_ros_mongo/actions/workflows/industrial_ci_action.yml?branch=melodic-devel)
+[![Format](https://github.com/ros-planning/warehouse_ros_mongo/actions/workflows/format.yml/badge.svg?branch=melodic-devel)](https://github.com/ros-planning/warehouse_ros_mongo/actions/workflows/format.yml?branch=melodic-devel) [![BuildAndTest](https://github.com/ros-planning/warehouse_ros_mongo/actions/workflows/industrial_ci_action.yml/badge.svg?branch=melodic-devel)](https://github.com/ros-planning/warehouse_ros_mongo/actions/workflows/industrial_ci_action.yml?branch=melodic-devel) [![codecov](https://codecov.io/gh/ros-planning/warehouse_ros_mongo/branch/melodic-devel/graph/badge.svg?token=W7uHKcY0ly)](https://codecov.io/gh/ros-planning/warehouse_ros_mongo)
 
 ## Building from source
 
