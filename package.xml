@@ -2,7 +2,7 @@
   <name>warehouse_ros_mongo</name>
   <version>0.9.2</version>
   <description>
-    Implementation of warehouse_ros for MongoDB
+    warehouse_ros for MongoDB
   </description>
   <author email="bhaskara@willowgarage.com">Bhaskara Marthi</author>
   <author email="cbrew@fetchrobotics.com">Connor Brew</author>
