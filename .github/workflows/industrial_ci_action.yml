@@ -72,6 +72,7 @@ jobs:
       - name: prepare target_ws for cache
         if: always()
         run: |
+          du -sh ${{ env.BASEDIR }}/target_ws
           sudo find ${{ env.BASEDIR }}/target_ws -name '*.gcov' -type f -delete
           sudo find ${{ env.BASEDIR }}/target_ws -name '*.gcno' -type f -delete
           sudo find ${{ env.BASEDIR }}/target_ws -name '*.gcda' -type f -delete
