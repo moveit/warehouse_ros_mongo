@@ -99,4 +99,4 @@ mongo::BSONObj MongoResultIterator::metadataRaw() const
   return next_->copy();
 }
 
-}  // warehouse_ros_mongo
+}  // namespace warehouse_ros_mongo

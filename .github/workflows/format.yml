@@ -18,9 +18,3 @@ jobs:
     - name: Install clang-format-10
       run: sudo apt-get install clang-format-10
     - uses: pre-commit/action@v2.0.0
-    - name: Comment on PR if checks fail
-      if: failure()
-      uses: thollander/actions-comment-pull-request@master
-      with:
-        message: 'The format checks failed :(, Here are instructions for running pre-commit to fix the formatting: https://github.com/ros-planning/moveit2/wiki/pre-commit'
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
