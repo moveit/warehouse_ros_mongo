@@ -75,15 +75,12 @@ target_link_libraries(${PROJECT_NAME} ${MONGODB_LIBRARIES})
 
 if(BUILD_TESTING)
   find_package(launch_testing_ament_cmake)
-  add_launch_test(test/warehouse_ros_mongo.launch.py)
-
   find_package(ament_cmake_gtest REQUIRED)
-  ament_add_gtest(test_warehouse_ros_mongo_cpp test/test_warehouse_ros_mongo.cpp)
-  target_link_libraries(test_warehouse_ros_mongo_cpp warehouse_ros_mongo ${GTEST_LIBRARIES} ${OPENSSL_CRYPTO_LIBRARY})
 
-  install(TARGETS test_warehouse_ros_mongo_cpp
-    DESTINATION lib/${PROJECT_NAME}
-  )
+  ament_add_gtest_executable(test_warehouse_ros_mongo_cpp test/test_warehouse_ros_mongo.cpp)
+  target_link_libraries(test_warehouse_ros_mongo_cpp warehouse_ros_mongo ${GTEST_LIBRARIES} ${OPENSSL_CRYPTO_LIBRARY})
+  add_launch_test(test/warehouse_ros_mongo.launch.py
+    ARGS "test_binary_dir:=$<TARGET_FILE_DIR:test_warehouse_ros_mongo_cpp>")
 
   # ament_lint
   find_package(ament_lint_auto REQUIRED)
