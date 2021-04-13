@@ -2,6 +2,12 @@
 Changelog for package warehouse_ros
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+2.0.1 (2021-04-09)
+------------------
+* Fix installation path for FindMONGODB.cmake (`#42 <https://github.com/ros-planning/warehouse_ros_mongo/issues/42>`_)
+* Fix cmake export of MONGODB dependency (`#41 <https://github.com/ros-planning/warehouse_ros_mongo/issues/41>`_)
+* Contributors: Jafar Abdi, Robert Haschke, Tyler Weaver
+
 2.0.0 (2020-11-20)
 -----------
 * [ros2-migration] Port to ROS 2 (`#38 <https://github.com/ros-planning/warehouse_ros_mongo/issues/38>`_)
