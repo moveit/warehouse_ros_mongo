@@ -32,6 +32,8 @@ jobs:
       UPSTREAM_WORKSPACE: warehouse_ros_mongo.repos
       CCACHE_DIR: /home/runner/.ccache
       BASEDIR: .base
+
+    name: ${{ matrix.env.ROS_DISTRO }}-${{ matrix.env.ROS_REPO }}${{ matrix.env.CCOV_UPLOAD && ' + ccov' || ''}}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
