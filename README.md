@@ -4,7 +4,7 @@ Code for persisting ROS message data using MongoDB.  Contains C++ and Python lib
 
 ## GitHub Actions - Continuous Integration
 
-[![Format](https://github.com/ros-planning/warehouse_ros_mongo/actions/workflows/format.yml/badge.svg?branch=ros2)](https://github.com/ros-planning/warehouse_ros_mongo/actions/workflows/format.yml?branch=ros2) [![BuildAndTest](https://github.com/ros-planning/warehouse_ros_mongo/actions/workflows/industrial_ci_action.yml/badge.svg?branch=ros2)](https://github.com/ros-planning/warehouse_ros_mongo/actions/workflows/industrial_ci_action.yml?branch=ros2) [![codecov](https://codecov.io/gh/ros-planning/warehouse_ros_mongo/branch/ros2/graph/badge.svg?token=W7uHKcY0ly)](https://codecov.io/gh/ros-planning/warehouse_ros_mongo)
+[![Formatting (pre-commit)](https://github.com/ros-planning/warehouse_ros_mongo/actions/workflows/format.yml/badge.svg?branch=ros2)](https://github.com/ros-planning/warehouse_ros_mongo/actions/workflows/format.yml?query=branch%3Aros2) [![Build And Test](https://github.com/ros-planning/warehouse_ros_mongo/actions/workflows/industrial_ci_action.yml/badge.svg?branch=ros2)](https://github.com/ros-planning/warehouse_ros_mongo/actions/workflows/industrial_ci_action.yml?query=branch%3Aros2) [![codecov](https://codecov.io/gh/ros-planning/warehouse_ros_mongo/branch/ros2/graph/badge.svg?token=W7uHKcY0ly)](https://codecov.io/gh/ros-planning/warehouse_ros_mongo)
 
 [![Code Coverage Grid](https://codecov.io/gh/ros-planning/warehouse_ros_mongo/branch/ros2/graphs/tree.svg)](https://codecov.io/gh/ros-planning/warehouse_ros_mongo/branch/ros2/graphs/tree.svg)
 
