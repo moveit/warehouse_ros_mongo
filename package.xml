@@ -15,6 +15,7 @@
   <buildtool_depend>ament_cmake_python</buildtool_depend>
 
   <build_depend>libmongoclient-dev</build_depend>
+  <build_depend>libssl-dev</build_depend>
 
   <depend>mongodb</depend>
   <depend>warehouse_ros</depend>
