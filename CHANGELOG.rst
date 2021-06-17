@@ -2,6 +2,13 @@
 Changelog for package warehouse_ros
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+2.0.2 (2021-06-17)
+------------------
+* [ROS2] Add prerelease tests (`#59 <https://github.com/ros-planning/warehouse_ros_mongo/issues/59>`_)
+* Use libssl-dev build_depend for OpenSSL (`#63 <https://github.com/ros-planning/warehouse_ros_mongo/issues/63>`_)
+* Add CI for Galactic, Rolling (`#57 <https://github.com/ros-planning/warehouse_ros_mongo/issues/57>`_)(`#56 <https://github.com/ros-planning/warehouse_ros_mongo/issues/56>`_)
+* Contributors: Henning Kayser, Vatan Aksoy Tezer
+
 2.0.1 (2021-04-09)
 ------------------
 * Fix installation path for FindMONGODB.cmake (`#42 <https://github.com/ros-planning/warehouse_ros_mongo/issues/42>`_)
