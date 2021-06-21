@@ -125,6 +125,11 @@ ament_export_dependencies(
   MONGODB
 )
 
+if(BUILD_TESTING)
+  find_package(ament_lint_auto)
+  ament_lint_auto_find_test_dependencies()
+endif()
+
 pluginlib_export_plugin_description_file(warehouse_ros mongo_database_connection_plugin_description.xml)
 
 ament_package(CONFIG_EXTRAS ConfigExtras.cmake)

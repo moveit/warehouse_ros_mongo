@@ -31,7 +31,7 @@
   <test_depend>ament_index_cpp</test_depend>
   
   <test_depend>ament_lint_auto</test_depend>
-  <test_depend>ament_lint_cmake</test_depend>
+  <test_depend>ament_cmake_copyright</test_depend>
 
   <export>
     <build_type>ament_cmake</build_type>
