@@ -15,7 +15,6 @@
   <buildtool_depend>ament_cmake_python</buildtool_depend>
 
   <build_depend>libmongoclient-dev</build_depend>
-  <build_depend>libssl-dev</build_depend>
 
   <depend>mongodb</depend>
   <depend>warehouse_ros</depend>
@@ -23,7 +22,6 @@
   <depend>std_msgs</depend>
   <depend>class_loader</depend>
   <depend>rclpy</depend>
-  <depend>openssl</depend>
 
   <test_depend>launch_testing_ament_cmake</test_depend>
   <test_depend>launch_ros</test_depend>
