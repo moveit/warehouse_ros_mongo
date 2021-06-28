@@ -21,7 +21,6 @@ find_package(rclcpp REQUIRED)
 find_package(std_msgs REQUIRED)
 find_package(warehouse_ros REQUIRED)
 find_package(class_loader REQUIRED)
-find_package(OpenSSL REQUIRED)
 find_package(MONGODB REQUIRED)
 find_package(ament_cmake_python REQUIRED)
 find_package(rclpy REQUIRED)
@@ -69,7 +68,6 @@ ament_target_dependencies(${PROJECT_NAME}
   std_msgs
   warehouse_ros
   class_loader
-  OpenSSL
 )
 target_link_libraries(${PROJECT_NAME} ${MONGODB_LIBRARIES})
 
@@ -78,7 +76,7 @@ if(BUILD_TESTING)
   find_package(ament_cmake_gtest REQUIRED)
 
   ament_add_gtest_executable(test_warehouse_ros_mongo_cpp test/test_warehouse_ros_mongo.cpp)
-  target_link_libraries(test_warehouse_ros_mongo_cpp warehouse_ros_mongo ${GTEST_LIBRARIES} ${OPENSSL_CRYPTO_LIBRARY})
+  target_link_libraries(test_warehouse_ros_mongo_cpp warehouse_ros_mongo ${GTEST_LIBRARIES})
   add_launch_test(test/warehouse_ros_mongo.launch.py
     ARGS "test_binary_dir:=$<TARGET_FILE_DIR:test_warehouse_ros_mongo_cpp>")
 
@@ -119,7 +117,6 @@ ament_export_dependencies(
   std_msgs
   warehouse_ros
   class_loader
-  OpenSSL
   ament_cmake_python
   rclpy
   MONGODB
