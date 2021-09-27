@@ -2,8 +2,8 @@
 Changelog for package warehouse_ros
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+2.0.3 (2021-09-27)
+------------------
 * Clean OpenSSL dependencies (`#67 <https://github.com/ros-planning/warehouse_ros_mongo/issues/67>`_)
 * Add Copyright and LICENSE files (`#65 <https://github.com/ros-planning/warehouse_ros_mongo/issues/65>`_)
 * Contributors: Vatan Aksoy Tezer
