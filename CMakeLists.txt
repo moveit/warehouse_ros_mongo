@@ -68,6 +68,7 @@ ament_target_dependencies(${PROJECT_NAME}
   std_msgs
   warehouse_ros
   class_loader
+  Boost
 )
 target_link_libraries(${PROJECT_NAME} ${MONGODB_LIBRARIES})
 
