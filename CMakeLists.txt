@@ -68,11 +68,9 @@ ament_target_dependencies(${PROJECT_NAME}
   std_msgs
   warehouse_ros
   class_loader
+  Boost
 )
 target_link_libraries(${PROJECT_NAME} ${MONGODB_LIBRARIES})
-target_link_libraries(${PROJECT_NAME} ${Boost_FILESYSTEM_LIBRARY})
-target_link_libraries(${PROJECT_NAME} ${Boost_SYSTEM_LIBRARY})
-target_link_libraries(${PROJECT_NAME} ${Boost_THREAD_LIBRARY})
 
 if(BUILD_TESTING)
   find_package(launch_testing_ament_cmake)
