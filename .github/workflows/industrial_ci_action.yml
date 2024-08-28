@@ -24,6 +24,13 @@ jobs:
           - {ROS_DISTRO: iron, ROS_REPO: main, CCOV_UPLOAD: false}
           - {ROS_DISTRO: humble, ROS_REPO: main, CCOV_UPLOAD: false}
     env:
+      BEFORE_BUILD_TARGET_WORKSPACE: |
+        # https://www.mongodb.com/docs/manual/tutorial/install-mongodb-on-ubuntu
+        ici_apt_install gnupg curl
+        curl -fsSL https://www.mongodb.org/static/pgp/server-7.0.asc | gpg -o /usr/share/keyrings/mongodb-server.gpg --dearmor
+        echo "deb [ arch=amd64 signed-by=/usr/share/keyrings/mongodb-server.gpg ] https://repo.mongodb.org/apt/ubuntu jammy/mongodb-org/7.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org.list
+        ici_cmd ici_asroot apt-get update -qq
+        ici_apt_install mongodb-org
       UPSTREAM_WORKSPACE: warehouse_ros_mongo.repos
       CCACHE_DIR: /home/runner/.ccache
       BASEDIR: .base
